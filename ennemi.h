@@ -48,8 +48,8 @@ public:
     void Deplace(); //Calcul la direction et deplace
 
     //Gestion de la vie
-    void Perte_vie(int degats_subis, int &Argent, int indice, int nb_ennemi); //Prends en paramètre un bool d'une fonction de projectile.h (si est touche)
-    void Mort(int &Argent, int indice, int nb_ennemi);
+    void Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi); //Prends en paramètre un bool d'une fonction de projectile.h (si est touche)
+    void Mort(int &Argent, int indice, int &nb_ennemi); //Indice servira lorsqu'on aura cree la liste d'ennemis
 
 
 

@@ -45,7 +45,6 @@ void ennemi::Efface_barre_vie()
     fillRect(position.x-Taille_barre_vie.x, position.y-Hauteur_barre_vie+Taille_barre_vie.y, 2*Taille_barre_vie.x+1, 2*Taille_barre_vie.y+1, WHITE);
 }
 
-
 //Deplacement
 void ennemi::Deplace() //Calcul la direction et deplace
 {
@@ -62,7 +61,7 @@ void ennemi::Deplace() //Calcul la direction et deplace
 //Gestion de la vie
 
 
-void ennemi::Mort(int &Argent, int indice, int nb_ennemi) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
+void ennemi::Mort(int &Argent, int indice, int &nb_ennemi) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
 {
     if (vie==0)
     {
@@ -75,7 +74,7 @@ void ennemi::Mort(int &Argent, int indice, int nb_ennemi) //nb_ennemi est defini
     }
 }
 
-void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int nb_ennemi) //Prends en paramètre la valeur des dégats recus
+void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi) //Prends en paramètre la valeur des dégats recus
 {
     vie-=degats_subis;
     if (vie<0)
@@ -85,10 +84,6 @@ void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int nb_ennemi)
     //On regarde si l'ennemi meurt
     Mort(Argent, indice, nb_ennemi);
 }
-
-
-
-
 
 // Types d'ennemis
 

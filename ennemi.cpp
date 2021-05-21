@@ -11,7 +11,7 @@ ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_o
 {
     vitesse=vite;
     vie_max=vie_init;
-    vie=vie_max;
+    hp=vie_max;
     recompense=reward;
     Hauteur_barre_vie=Hauteur;
     position=position_origine;
@@ -34,7 +34,7 @@ void ennemi::Efface_ennemi()
 void ennemi::Affiche_barre_vie()
 {
     //Intérieur:
-    int pourcentage=ceil(vie*2*Taille_barre_vie.x/vie_max);
+    int pourcentage=ceil(hp*2*Taille_barre_vie.x/vie_max);
     fillRect(position.x-Taille_barre_vie.x, position.y-Hauteur_barre_vie+Taille_barre_vie.y, pourcentage, 2*Taille_barre_vie.y, GREEN);
     //Contour:
     drawRect(position.x-Taille_barre_vie.x, position.y-Hauteur_barre_vie+Taille_barre_vie.y, 2*Taille_barre_vie.x, 2*Taille_barre_vie.y, BLACK);
@@ -63,7 +63,7 @@ void ennemi::Deplace() //Calcul la direction et deplace
 
 void ennemi::Mort(int &Argent, int indice, int &nb_ennemi) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
 {
-    if (vie==0)
+    if (hp==0)
     {
 
         Argent+=recompense;
@@ -76,10 +76,10 @@ void ennemi::Mort(int &Argent, int indice, int &nb_ennemi) //nb_ennemi est defin
 
 void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi) //Prends en paramètre la valeur des dégats recus
 {
-    vie-=degats_subis;
-    if (vie<0)
+    hp-=degats_subis;
+    if (hp<0)
     {
-        vie=0;
+        hp=0;
     }
     //On regarde si l'ennemi meurt
     Mort(Argent, indice, nb_ennemi);

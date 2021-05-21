@@ -1,21 +1,14 @@
 #pragma once
 
 #include "chemin.h"
-#include "interface.h"
+#include "tools.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
-
-//On créé une structure point
-struct point
-{
-    int x;
-    int y;
-};
 
 //On définit une classe ennemi
 class ennemi
 {
-public:
+
     //Parametres fixes
     int vitesse;
     int vie_max; //Vie initiale
@@ -24,7 +17,7 @@ public:
 
     //Parametres variables
     point position;
-    int vie; //Vie actuelle
+    int hp; //Vie actuelle
     bool vivant;
 
     //Forme de l'ennemi (à modifier à la fin)
@@ -33,7 +26,7 @@ public:
     Color couleur;
 
     //Fonctions
-
+public:
 
     //Constructeur
     ennemi();

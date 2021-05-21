@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ennemi.h"
-#include "interface.h"
+#include "tools.h"
 
 class chemin
 {
@@ -12,7 +12,7 @@ class chemin
     bool* libre; //indique si une tour est présente sur la case i+j*nb_hauteur_case
 
     //Constructeur
-    //chemin(interface I, int taille_case);
+    chemin(int l, int h, int taille_case);
 
     //Fonction
     void Calcul_plus_court_chemin(); //Retourne une liste d'entier (haut, gauche, bas, droite)

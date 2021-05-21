@@ -1,17 +1,20 @@
 #pragma once
 
 #include "ennemi.h"
+#include "interface.h"
 
 class chemin
 {
-public:
-    int largeur;
-    int hauteur;
-    int Argent;
-    int nb_ennemi_initial;
-    int nb_ennemi;
+
+    int taille_carre_grille; //pour controler le deplacement (eviter de se deplacer sur la position d'une tour)
+    int nb_largeur_case;
+    int nb_hauteur_case;
+    bool* libre; //indique si une tour est présente sur la case i+j*nb_hauteur_case
 
     //Constructeur
-    chemin(int nb);
+    //chemin(interface I, int taille_case);
+
+    //Fonction
+    void Calcul_plus_court_chemin(); //Retourne une liste d'entier (haut, gauche, bas, droite)
 
 };

@@ -1,4 +1,4 @@
-#include "chemin.h"
+#include "interface.h"
 #include <string>
 using namespace std;
 
@@ -47,7 +47,7 @@ void interface::Affiche_marge()
 }
 
 
-int interface::choisir_tour()
+void interface::choisir_tour()
 {
     int x; int y;
     int k=getMouse(x,y);
@@ -90,6 +90,10 @@ void interface::choisir_position_tour(int n)
             fillCircle(x,y,5,WHITE);
             if (confirmer)
             {
+                //Calcul de la case occupée
+                //int i=floor(x/c.taille_carre_grille);
+                //int j=floor(y/c.taille_carre_grille);
+
                 drawString(x,y,std::to_string(n),ORANGE,30);
             }
         }

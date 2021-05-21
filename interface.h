@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ennemi.h"
+#include "chemin.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
@@ -32,12 +33,12 @@ public:
     void Affiche_marge();
     void Affiche_case_tour(int indice);
 
-    //Utilisations des cases
-    int choisir_tour();
+    //Utilisations des cases pour placer les tours
+    void choisir_tour();
     int case_selectionnees(int x, int y);
     void choisir_position_tour(int n); //Prendra aussi les tours en paramètres
-    bool confirmer_placement();
 
+    bool confirmer_placement();
 
 
 };

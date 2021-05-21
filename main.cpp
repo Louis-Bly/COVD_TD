@@ -2,6 +2,7 @@
 using namespace Imagine;
 
 #include "ennemi.h"
+#include "interface.h"
 #include "chemin.h"
 
 int main()

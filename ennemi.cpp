@@ -11,13 +11,14 @@ ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_o
 {
     vitesse=vite;
     vie_max=vie_init;
-    hp=vie_max;
+    hp=vie_init;
     recompense=reward;
     Hauteur_barre_vie=Hauteur;
     position=position_origine;
     couleur=col;
     Rayon=R;
     Taille_barre_vie=Dimension_barre_vie;
+    vivant=true;
 }
 
 //Affichages
@@ -61,20 +62,25 @@ void ennemi::Deplace() //Calcul la direction et deplace
 //Gestion de la vie
 
 
-void ennemi::Mort(int &Argent, int indice, int &nb_ennemi) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
+bool ennemi::Mort(int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
 {
     if (hp==0)
     {
-
-        Argent+=recompense;
-        nb_ennemi--;
         Efface_ennemi();
         Efface_barre_vie();
         vivant=false;
+        Argent+=recompense;
+        nb_ennemi--;
+
+        liste[indice]=liste[nb_ennemi];
+        return vivant;
+
+
+
     }
 }
 
-void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi) //Prends en paramètre la valeur des dégats recus
+bool ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //Prends en paramètre la valeur des dégats recus, retourne vrai si l'ennemi meurt de ses blessures
 {
     hp-=degats_subis;
     if (hp<0)
@@ -82,7 +88,7 @@ void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi
         hp=0;
     }
     //On regarde si l'ennemi meurt
-    Mort(Argent, indice, nb_ennemi);
+    return Mort(Argent, indice, nb_ennemi,liste);
 }
 
 // Types d'ennemis

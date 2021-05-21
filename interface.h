@@ -13,6 +13,7 @@ class interface
 public:
     int largeur;
     int hauteur;
+    Color couleur_arriere_plan;
     int Argent;
     int nb_ennemi_initial;
     int nb_ennemi;
@@ -33,6 +34,8 @@ public:
     //Fonctions d'affichages
 
 
+
+
     void Affiche_nb_ennemi_restant();
     void Affiche_argent();
     void Affiche_marge();
@@ -44,6 +47,9 @@ public:
     bool choisir_position_tour(int &n); //Prendra aussi les tours en paramètres
 
     bool confirmer_placement();
+
+    //TEST
+    void liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t);
 
 
 };

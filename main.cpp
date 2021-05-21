@@ -1,6 +1,9 @@
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
+#include <iostream>
+using namespace std;
+
 #include "ennemi.h"
 #include "interface.h"
 #include "chemin.h"
@@ -8,37 +11,30 @@ using namespace Imagine;
 #include <string>
 using namespace std;
 
-int main()
+void test()
 {
-    //TEST
     point position_origine_b;
     position_origine_b.x=1500;
     position_origine_b.y=200;
 
     point position_origine_r;
     position_origine_r.x=1500;
-    position_origine_r.y=300;
+    position_origine_r.y=400;
 
     point position_origine_a;
     position_origine_a.x=1500;
-    position_origine_a.y=400;
+    position_origine_a.y=600;
 
     point position_origine_t;
     position_origine_t.x=1500;
-    position_origine_t.y=500;
+    position_origine_t.y=800;
 
 
-    int d=30;
-    int argent=0;
     int buffer_tour=-1;
 
-    interface Interface=interface(4,1900,1000,150,120,200,70);
+    interface Interface=interface(4,1900,1000,160,120,200,70);
 
-    //Interface.liste_ennemi[0]=ennemi_basique(position_origine_b);
-    //Interface.liste_ennemi[1]=ennemi_rapide(position_origine_r);
-    //Interface.liste_ennemi[2]=ennemi_ameliore(position_origine_a);
-    //Interface.liste_ennemi[3]=ennemi_tank(position_origine_t);
-    ennemi E_b=ennemi_basique(position_origine_b); //TEST
+    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t);
 
 
 
@@ -54,27 +50,29 @@ int main()
 
     for (int i=0; i<Interface.nb_ennemi; i++)
     {
-        //Interface.liste_ennemi[i].Affiche_ennemi();
-        //Interface.liste_ennemi[i].Affiche_barre_vie();
-        E_b.Affiche_barre_vie();
-        E_b.Affiche_ennemi();
+        Interface.liste_ennemi[i].Affiche_ennemi();
+        Interface.liste_ennemi[i].Affiche_barre_vie();
 
     }
-    while (1>0)
+    while (Interface.nb_ennemi>0)
     {
         for (int i=0; i<Interface.nb_ennemi; i++)
         {
-            //Interface.liste_ennemi[i].Perte_vie(30,argent,nb);
-            //Interface.liste_ennemi[i].Deplace();
-            //E_b.Perte_vie(30,argent,0,Interface.nb_ennemi);
-            E_b.Deplace();
+            if (Interface.liste_ennemi[i].Perte_vie(10,Interface.Argent,i,Interface.nb_ennemi,Interface.liste_ennemi))
+            {
+                Interface.Affiche_argent();
+            }
+            Interface.liste_ennemi[i].Deplace();
             Interface.choisir_tour(buffer_tour);
+            cout<<i<<endl;
         }
-        milliSleep(100);
+        milliSleep(2000);
     }
+}
 
-
-
+int main()
+{
+    test();
 
     return 0;
 }

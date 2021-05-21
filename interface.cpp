@@ -2,6 +2,11 @@
 #include <string>
 using namespace std;
 
+interface::interface()
+{
+
+}
+
 interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_tour, int e_case_tour)
 {
     hauteur=h;
@@ -34,9 +39,10 @@ void interface::Affiche_argent()
 
 }
 
-void interface::Affiche_case_tour(int indice)
+void interface::Affiche_case_tour(int &indice)
 {
     drawRect(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-15,largeur_case_tour,hauteur_case_tour, BLACK);
+    indice=-1;
 }
 
 void interface::Affiche_marge()
@@ -47,18 +53,25 @@ void interface::Affiche_marge()
 }
 
 
-void interface::choisir_tour()
+void interface::choisir_tour(int &n)
 {
-    int x; int y;
-    int k=getMouse(x,y);
-    int n=-1;
-    if (k==1)
+    if (n==-1)
     {
-        n=case_selectionnees(x,y);
-        drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-15,largeur_case_tour,hauteur_case_tour, GREEN);
+        point point;
+        point=Souris_clique_gauche();
+        if ((point.x!=-1)&&(point.y!=-1))
+        {
+            n=case_selectionnees(point.x,point.y);
+            drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-15,largeur_case_tour,hauteur_case_tour, GREEN);
+        }
     }
-    choisir_position_tour(n);
-    Affiche_case_tour(n);
+    else
+    {
+        if(choisir_position_tour(n))
+        {
+            Affiche_case_tour(n);
+        }
+    }
 }
 
 int interface::case_selectionnees(int x, int y)
@@ -77,34 +90,38 @@ int interface::case_selectionnees(int x, int y)
     return numero;
 }
 
-void interface::choisir_position_tour(int n)
+bool interface::choisir_position_tour(int &n)
 {
+    bool bien_place = false;
     if ((n>=0)&&(n<6))
     {
-        int x; int y;
-        int k=getMouse(x,y);
-        if (k==1)
+        point point;
+        point=Souris_clique_gauche();
+        if ((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))
         {
-            fillCircle(x,y,5,GREEN);
-            bool confirmer=confirmer_placement();
-            fillCircle(x,y,5,WHITE);
-            if (confirmer)
+            bien_place=true;
+            if (bien_place)
             {
                 //Calcul de la case occupée
                 //int i=floor(x/c.taille_carre_grille);
                 //int j=floor(y/c.taille_carre_grille);
 
-                drawString(x,y,std::to_string(n),ORANGE,30);
+                drawString(point.x,point.y,std::to_string(n),ORANGE,30);
             }
         }
+        else if ((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))
+        {
+            drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-15,largeur_case_tour,hauteur_case_tour, BLACK);
+            n=-1; // Si on clique à nouveau dans la zone inférieur, on déselectionne la tour.
+        }
     }
+    return bien_place;
 }
 
-bool interface::confirmer_placement()
+bool interface::confirmer_placement() //Ne sert à rien
 {
-    int x; int y;
-    int k=getMouse(x,y);
-    if (k==1)
+    point p=Souris_clique_gauche();
+    if ((p.x!=-1) && (p.y!=-1))
     {
         return true;
     }

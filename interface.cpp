@@ -31,15 +31,16 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
 
 void interface::Affiche_nb_ennemi_restant()
 {
-    drawString(largeur-180,hauteur-taille_marge*0.25,"ENNEMIS",RED);
-    drawString(largeur-180,hauteur-taille_marge*0.12,"RESTANTS",RED);
-    drawString(largeur-75,hauteur-taille_marge*0.15,std::to_string(nb_ennemi),ORANGE,30);
+    drawString(largeur*0.9,hauteur-taille_marge*0.25,"ENNEMIS",RED);
+    drawString(largeur*0.9,hauteur-taille_marge*0.12,"RESTANTS",RED);
+    drawString(largeur*0.96,hauteur-taille_marge*0.15,std::to_string(nb_ennemi),ORANGE,30);
 }
 void interface::Affiche_argent()
 {
-    drawString(largeur-180,hauteur-taille_marge*0.75,"ARGENT",ORANGE);
-    fillRect(largeur-115,hauteur-taille_marge*0.95,100,taille_marge*0.40,couleur_arriere_plan);
-    drawString(largeur-75,hauteur-taille_marge*0.65,std::to_string(Argent),ORANGE,30);
+    int taille_ecriture_argent=100;
+    drawString(largeur*0.9,hauteur-taille_marge*0.75,"ARGENT",ORANGE);
+    fillRect(largeur*0.94,hauteur-taille_marge*0.95,taille_ecriture_argent,taille_marge*0.40,couleur_arriere_plan);
+    drawString(largeur*0.96,hauteur-taille_marge*0.65,std::to_string(Argent),ORANGE,30);
 
 }
 
@@ -59,9 +60,10 @@ void interface::Affiche_case_tour(int &indice)
 void interface::Affiche_marge()
 {
     //Dessine les marges contenant la valeur de l'argent, le nombre d'ennemis restants, et les tours achetables
-    drawLine(0,hauteur-taille_marge,largeur,hauteur-taille_marge,BLACK,4);
-    drawLine(largeur-200,hauteur-taille_marge,largeur-200,hauteur,BLACK,4);
-    drawLine(largeur-200,hauteur-taille_marge/2+2,largeur,hauteur-taille_marge/2+2,BLACK,4);
+    int epaisseur_trait=4;
+    drawLine(0,hauteur-taille_marge,largeur,hauteur-taille_marge,BLACK,epaisseur_trait);
+    drawLine(largeur*0.89,hauteur-taille_marge,largeur*0.89,hauteur,BLACK,4);
+    drawLine(largeur*0.89,hauteur-taille_marge/2+epaisseur_trait/2,largeur,hauteur-taille_marge/2+epaisseur_trait/2,BLACK,epaisseur_trait);
 }
 
 

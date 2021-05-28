@@ -5,7 +5,7 @@ const int nb_type_projectiles = 1;
 const int vitesses_projectiles[nb_type_projectiles] = {15};
 const int taille_projectiles[nb_type_projectiles] = {3};
 const int degats_projectiles[nb_type_projectiles] = {1};
-const Color couleur_projectiles[nb_type_projectiles] = {RED};
+const Color couleur_projectiles[nb_type_projectiles] = {GREEN};
 
 class projectile{
     point pos;

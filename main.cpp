@@ -66,7 +66,8 @@ void test()
             Interface.choisir_tour(buffer_tour);
             cout<<i<<endl;
         }
-        milliSleep(2000);
+        milliSleep(200);
+
     }
 }
 

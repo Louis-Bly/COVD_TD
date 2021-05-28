@@ -38,7 +38,7 @@ void test()
 
 
 
-    openWindow(Interface.largeur,Interface.hauteur);
+    openWindow(Interface.get_largeur(),Interface.get_hauteur());
     Interface.Affiche_marge();
     Interface.Affiche_nb_ennemi_restant();
     Interface.Affiche_argent();

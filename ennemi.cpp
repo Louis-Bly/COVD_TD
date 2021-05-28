@@ -74,9 +74,6 @@ bool ennemi::Mort(int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //nb_
 
         liste[indice]=liste[nb_ennemi];
         return vivant;
-
-
-
     }
 }
 

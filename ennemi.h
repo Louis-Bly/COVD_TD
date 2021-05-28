@@ -45,6 +45,12 @@ public:
     bool Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi, ennemi* &liste); //Prends en paramètre un bool d'une fonction de projectile.h (si est touche)
     bool Mort(int &Argent, int indice, int &nb_ennemi, ennemi* &liste); //Indice servira lorsqu'on aura cree la liste d'ennemis
 
+    //Fonctions Get
+    point get_position(){return position;};
+    int get_rayon(){return Rayon;};
+    int get_vie_max(){return vie_max;};
+    int get_hp(){return hp;};
+    int get_vitesse(){return vitesse;};
 
 
 };

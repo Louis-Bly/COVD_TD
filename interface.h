@@ -10,19 +10,20 @@ using namespace Imagine;
 
 class interface
 {
-public:
     int largeur;
     int hauteur;
     Color couleur_arriere_plan;
-    int Argent;
     int nb_ennemi_initial;
-    int nb_ennemi;
     int taille_marge; //La marge contient l'interface pour poser des tours
 
     int hauteur_case_tour;
     int largeur_case_tour;
     int ecart_case_tour;
 
+public:
+
+    int Argent;
+    int nb_ennemi;
     ennemi* liste_ennemi;
 
 
@@ -30,11 +31,13 @@ public:
     interface();
     interface(int nb, int hauteur, int largeur, int hauteur_marge, int h_tour, int l_tour, int e_case_tour);
 
+    //Fonctions get:
+
+    int get_largeur(){return largeur;};
+    int get_hauteur(){return hauteur;};
+    int get_nb_ennemi(){return nb_ennemi;};
 
     //Fonctions d'affichages
-
-
-
 
     void Affiche_nb_ennemi_restant();
     void Affiche_argent();

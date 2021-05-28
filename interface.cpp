@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+//Constructeurs
+
 interface::interface()
 {
 
@@ -25,6 +27,8 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
     liste_ennemi=new ennemi[nb];
 }
 
+//Affichage en bas de l'écran
+
 void interface::Affiche_nb_ennemi_restant()
 {
     drawString(largeur-180,hauteur-taille_marge*0.25,"ENNEMIS",RED);
@@ -41,6 +45,7 @@ void interface::Affiche_argent()
 
 void interface::Affiche_case_tour(int &indice)
 {
+    //Dessine des cases
     drawRect(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, BLACK);
     indice=-1;
 
@@ -53,6 +58,7 @@ void interface::Affiche_case_tour(int &indice)
 
 void interface::Affiche_marge()
 {
+    //Dessine les marges contenant la valeur de l'argent, le nombre d'ennemis restants, et les tours achetables
     drawLine(0,hauteur-taille_marge,largeur,hauteur-taille_marge,BLACK,4);
     drawLine(largeur-200,hauteur-taille_marge,largeur-200,hauteur,BLACK,4);
     drawLine(largeur-200,hauteur-taille_marge/2+2,largeur,hauteur-taille_marge/2+2,BLACK,4);
@@ -61,62 +67,59 @@ void interface::Affiche_marge()
 
 void interface::choisir_tour(int &n)
 {
-    if (n==-1)
+    if (n==-1) //Si l'on n'a pas encore choisi quelle tour placee
     {
         point point;
-        point=Souris_clique_gauche();
+        point=Souris_clique_gauche(); //Selection de la case
         if ((point.x!=-1)&&(point.y!=-1))
         {
-            n=case_selectionnees(point.x,point.y);
+            n=case_selectionnees(point.x,point.y); //On voit quel case a ete selectionnee et on la met en vert
             drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, GREEN);
         }
     }
-    else
+    else //Sinon, on s'interesse à la position de la tour
     {
-        if(choisir_position_tour(n))
+        if(choisir_position_tour(n)) //Si la position de la tour est possible, on la place
         {
-            Affiche_case_tour(n);
+            Affiche_case_tour(n); //On deselectionne alors la case associee et la redessinant
         }
     }
 }
 
 int interface::case_selectionnees(int x, int y)
 {
-    int numero=-1;
-    if ((y>hauteur-hauteur_case_tour-15) && (y<hauteur-15))
+    int numero=-1; //Pas de case selectionnee
+    if ((y>hauteur-hauteur_case_tour-15) && (y<hauteur-15)) //La hauteur correspond à celle des cases
     {
         for (int i=0;i<6;i++)
         {
             if ((x>ecart_case_tour+i*(largeur_case_tour+ecart_case_tour))&&(x<(i+1)*(largeur_case_tour+ecart_case_tour)))
             {
-                numero=i;
+                numero=i; //Case i a ete choisie
             }
         }
     }
-    return numero;
+    return numero; //numero de la case
 }
 
 bool interface::choisir_position_tour(int &n)
 {
     bool bien_place = false;
-    if ((n>=0)&&(n<6))
+    if ((n>=0)&&(n<6)) //On verifie qu'une tour a bien ete selectionnee
     {
         point point;
-        point=Souris_clique_gauche();
-        if (((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour
+        point=Souris_clique_gauche(); //Choix de la position
+        if (((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
         {
             bien_place=true;
             if (bien_place)
             {
-                //Calcul de la case occupée
-                //int i=floor(x/c.taille_carre_grille);
-                //int j=floor(y/c.taille_carre_grille);
-                Argent-=n;
+                Argent-=n;//On enleve le cout à l'argent (pour l'instant n)
                 for (int i=0;i<6;i++)
                 {
-                    dessine_argent_suffisant(i,i);
+                    dessine_argent_suffisant(i,i); //On revoit quelles tours sont achetables
                 }
-                drawString(point.x,point.y,std::to_string(n),ORANGE,30);
+                drawString(point.x,point.y,std::to_string(n),ORANGE,30); //On dessine la tour(pour l'instant des nombres)
             }
         }
         else if (((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))||(n>Argent))
@@ -139,22 +142,26 @@ bool interface::confirmer_placement() //Ne sert à rien
     return false;
 }
 
+
+
+void interface::dessine_argent_suffisant(int cout, int n) //Indique quelles tours sont disponibles
+{
+    if (cout>Argent)//Indique qu'il n'est pas possible de l'acheter
+    {
+        drawString(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour)+40,hauteur-taille_marge+20,"Argent insuffisant",RED);
+    }
+    else //Indique qu'il est possible de l'acheter
+    {
+        fillRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-36,largeur_case_tour,22, couleur_arriere_plan);
+    }
+}
+
+
+//Test
 void interface::liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t)
 {
     liste_ennemi[0]=ennemi_basique(position_origine_b);
     liste_ennemi[1]=ennemi_rapide(position_origine_r);
     liste_ennemi[2]=ennemi_ameliore(position_origine_a);
     liste_ennemi[3]=ennemi_tank(position_origine_t);
-}
-
-void interface::dessine_argent_suffisant(int cout, int n)
-{
-    if (cout>Argent)
-    {
-        drawString(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour)+40,hauteur-taille_marge+20,"Argent insuffisant",RED);
-    }
-    else
-    {
-        fillRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-36,largeur_case_tour,22, WHITE);
-    }
 }

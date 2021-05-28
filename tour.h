@@ -1,5 +1,6 @@
 #pragma once
 #include "tools.h"
+#include "grille.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
@@ -16,7 +17,7 @@ class tour{
     int recharge; //recharge=0 -> prêt à tirer
     Color couleur;
 public:
-    tour(int xi, int yi, int typei); //x,y -> coin supérieur gauche
-    void affiche();
+    tour(int xi, int yi, int typei, grille g); //x,y -> coin supérieur gauche
+    void affiche(grille g);
     void tire();
 };

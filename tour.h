@@ -1,18 +1,22 @@
 #pragma once
+#include "tools.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
 const int nb_type_tour = 1;
+const int rayon_tour[nb_type_tour] = {5};
+const int tps_recharge_tour[nb_type_tour] = {5};
 const Color couleur_tour[nb_type_tour] = {RED};
 
 class tour{
-    int x,y;
+    point pos;
     int type;
     int rayon;
     int tps_recharge;
     int recharge; //recharge=0 -> prêt à tirer
+    Color couleur;
 public:
-    tour(int x, int y, int type); //x,y -> coin supérieur gauche
+    tour(int xi, int yi, int typei); //x,y -> coin supérieur gauche
     void affiche();
     void tire();
 };

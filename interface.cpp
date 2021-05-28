@@ -25,9 +25,6 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
     liste_ennemi=new ennemi[nb];
 }
 
-
-
-
 void interface::Affiche_nb_ennemi_restant()
 {
     drawString(largeur-180,hauteur-taille_marge*0.25,"ENNEMIS",RED);
@@ -46,6 +43,12 @@ void interface::Affiche_case_tour(int &indice)
 {
     drawRect(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, BLACK);
     indice=-1;
+
+    //On affiche aussi quelles tours sont achetables
+    for (int n=0;n<6;n++)
+    {
+        dessine_argent_suffisant(n,n);
+    }
 }
 
 void interface::Affiche_marge()
@@ -109,16 +112,15 @@ bool interface::choisir_position_tour(int &n)
                 //int i=floor(x/c.taille_carre_grille);
                 //int j=floor(y/c.taille_carre_grille);
                 Argent-=n;
-
+                for (int i=0;i<6;i++)
+                {
+                    dessine_argent_suffisant(i,i);
+                }
                 drawString(point.x,point.y,std::to_string(n),ORANGE,30);
             }
         }
         else if (((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))||(n>Argent))
         {
-            if (n>Argent)
-            {
-                drawString(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour)+40,hauteur-taille_marge+20,"Argent insuffisant",RED);
-            }
             drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, BLACK);
             n=-1; // Si on clique à nouveau dans la zone inférieur, on déselectionne la tour.
 
@@ -143,4 +145,16 @@ void interface::liste_test(point position_origine_b,point position_origine_r,poi
     liste_ennemi[1]=ennemi_rapide(position_origine_r);
     liste_ennemi[2]=ennemi_ameliore(position_origine_a);
     liste_ennemi[3]=ennemi_tank(position_origine_t);
+}
+
+void interface::dessine_argent_suffisant(int cout, int n)
+{
+    if (cout>Argent)
+    {
+        drawString(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour)+40,hauteur-taille_marge+20,"Argent insuffisant",RED);
+    }
+    else
+    {
+        fillRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-36,largeur_case_tour,22, WHITE);
+    }
 }

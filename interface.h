@@ -48,6 +48,8 @@ public:
 
     bool confirmer_placement();
 
+    void dessine_argent_suffisant(int cout, int n);
+
     //TEST
     void liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t);
 

@@ -61,12 +61,15 @@ void test()
             if (Interface.liste_ennemi[i].Perte_vie(10,Interface.Argent,i,Interface.nb_ennemi,Interface.liste_ennemi))
             {
                 Interface.Affiche_argent();
+                for (int n=0;n<6;n++)
+                {
+                    Interface.dessine_argent_suffisant(n,n);
+                }
             }
             Interface.liste_ennemi[i].Deplace();
             Interface.choisir_tour(buffer_tour);
-            cout<<i<<endl;
         }
-        milliSleep(2000);
+        milliSleep(200);
     }
 }
 

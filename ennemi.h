@@ -19,6 +19,7 @@ class ennemi
     point position;
     int hp; //Vie actuelle
     bool vivant;
+    chemin Chemin;
 
     //Forme de l'ennemi (à modifier à la fin)
     int Rayon; //Rayon du cercle (pour l'instant, les ennemis sont des cercles)

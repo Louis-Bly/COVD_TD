@@ -9,12 +9,29 @@ class grille
     int nb_hauteur_case;
     bool* libre_tour; //indique si une tour ou un ennemi est présente sur la case i+j*nb_hauteur_case (on ne peut pas placer une tour sur une case ou un ennemi est présent)
     bool* libre_ennemi; //indique si une tour est présente sur la case i+j*nb_hauteur_case (2 ennemis peuvent être sur une même case)
+    int* cout_des_cases;
+
 public:
     //Constructeur
     grille(int l, int h, int taille_case_i);
+
+
+
     void affiche();
+
+    void ajout_tour(int place);
+    void maj_cout_des_cases();
+
+    // Fonctions get
+    bool get_libre_ennemi(int indice){return libre_ennemi[indice];};
+    int get_cout_des_cases(int indice){return cout_des_cases[indice];};
+    bool get_libre_tour(int indice){return libre_tour[indice];};
     int get_taille_case(){return taille_case;};
     int get_place(point pos);
     point get_pos(int place);
-    void ajout_tour(int place);
+    int get_nombre_case(){return nb_largeur_case*nb_hauteur_case;};
+
+
+
+
 };

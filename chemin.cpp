@@ -5,7 +5,10 @@ chemin::chemin()
 
 }
 
-chemin::chemin(int nb_largeur_case, int nb_hauteur_case)
+chemin::chemin(grille G)
 {
-    direction= new point[nb_largeur_case*nb_hauteur_case];
+    direction= new point[G.get_nombre_case()];
+    cout_des_cases=new int[G.get_nombre_case()];
 }
+
+

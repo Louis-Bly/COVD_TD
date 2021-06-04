@@ -62,7 +62,7 @@ void ennemi::Deplace() //Calcul la direction et deplace
 //Gestion de la vie
 
 
-bool ennemi::Mort(int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
+void ennemi::Mort(int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //nb_ennemi est defini dans chemin, lorsqu'il tombe à 0 la partie s'est gagné
 {
     if (hp==0)
     {
@@ -73,11 +73,10 @@ bool ennemi::Mort(int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //nb_
         nb_ennemi--;
 
         liste[indice]=liste[nb_ennemi];
-        return vivant;
     }
 }
 
-bool ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //Prends en paramètre la valeur des dégats recus, retourne vrai si l'ennemi meurt de ses blessures
+void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi, ennemi *&liste) //Prends en paramètre la valeur des dégats recus, retourne vrai si l'ennemi meurt de ses blessures
 {
     hp-=degats_subis;
     if (hp<0)
@@ -85,7 +84,7 @@ bool ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi
         hp=0;
     }
     //On regarde si l'ennemi meurt
-    return Mort(Argent, indice, nb_ennemi,liste);
+    Mort(Argent, indice, nb_ennemi,liste);
 }
 
 // Types d'ennemis

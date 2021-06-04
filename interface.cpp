@@ -24,7 +24,7 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
     nb_ennemi_initial=nb;
     nb_ennemi=nb;
     Argent=0;
-    liste_ennemi=new ennemi[nb];
+    nb_tour = 0;
 }
 
 //Affichage en bas de l'écran
@@ -70,7 +70,7 @@ void interface::choisir_tour(int &n)
     if (n==-1) //Si l'on n'a pas encore choisi quelle tour placee
     {
         point point;
-        point=Souris_clique_gauche(); //Selection de la case
+        point=Souris_clique_gauche(); //Selection de la case de l'interface
         if ((point.x!=-1)&&(point.y!=-1))
         {
             n=case_selectionnees(point.x,point.y); //On voit quel case a ete selectionnee et on la met en vert
@@ -158,10 +158,10 @@ void interface::dessine_argent_suffisant(int cout, int n) //Indique quelles tour
 
 
 //Test
-void interface::liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t)
+void interface::liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t, ennemi liste_ennemis[])
 {
-    liste_ennemi[0]=ennemi_basique(position_origine_b);
-    liste_ennemi[1]=ennemi_rapide(position_origine_r);
-    liste_ennemi[2]=ennemi_ameliore(position_origine_a);
-    liste_ennemi[3]=ennemi_tank(position_origine_t);
+    liste_ennemis[0]=ennemi_basique(position_origine_b);
+    liste_ennemis[1]=ennemi_rapide(position_origine_r);
+    liste_ennemis[2]=ennemi_ameliore(position_origine_a);
+    liste_ennemis[3]=ennemi_tank(position_origine_t);
 }

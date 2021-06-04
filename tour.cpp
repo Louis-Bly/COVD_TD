@@ -1,6 +1,10 @@
 #include "tour.h"
 
 
+tour::tour(){
+
+}
+
 tour::tour(int xi, int yi, int typei, grille g){  //x,y -> coin supérieur gauche
     point pi;
     pi.x = xi;

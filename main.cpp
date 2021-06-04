@@ -7,9 +7,18 @@ using namespace std;
 #include "ennemi.h"
 #include "interface.h"
 #include "chemin.h"
+#include "grille.h"
+#include "tour.h"
+#include "projectile.h"
 
 #include <string>
 using namespace std;
+
+ennemi* liste_ennemis;
+tour* liste_tours;
+projectile* liste_projectiles;
+
+
 
 void test()
 {
@@ -31,10 +40,13 @@ void test()
 
 
     int buffer_tour=-1;
+    const int largeur_fenetre = 1900;
+    const int hauteur_fenetre = 1000;
+    const int taille_marge = 160;
+    interface Interface=interface(4,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70);
+    liste_ennemis = new ennemi[4];
 
-    interface Interface=interface(4,1900,1000,160,120,200,70);
-
-    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t);
+    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis);
 
 
 
@@ -48,25 +60,31 @@ void test()
         Interface.Affiche_case_tour(j);
     }
 
-    for (int i=0; i<Interface.nb_ennemi; i++)
+    for (int i=0; i<Interface.get_nb_ennemi(); i++)
     {
-        Interface.liste_ennemi[i].Affiche_ennemi();
-        Interface.liste_ennemi[i].Affiche_barre_vie();
+        liste_ennemis[i].Affiche_ennemi();
+        liste_ennemis[i].Affiche_barre_vie();
 
     }
-    while (Interface.nb_ennemi>0)
+    int taille_case = 75;
+    grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
+    liste_tours = new tour [1000]; //g.get_nombre_case après le merge
+    while (Interface.get_nb_ennemi()>0)
     {
-        for (int i=0; i<Interface.nb_ennemi; i++)
+        g.affiche();
+        for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
-            if (Interface.liste_ennemi[i].Perte_vie(10,Interface.Argent,i,Interface.nb_ennemi,Interface.liste_ennemi))
+            int ennemis_act = Interface.get_nb_ennemi();
+            int argent_act = Interface.get_Argent();
+            liste_ennemis[i].Perte_vie(10,argent_act,i,ennemis_act,liste_ennemis);
+            Interface.set_Argent(argent_act);
+            Interface.set_nb_ennemi(ennemis_act);
+            Interface.Affiche_argent();
+            for (int n=0;n<6;n++)
             {
-                Interface.Affiche_argent();
-                for (int n=0;n<6;n++)
-                {
-                    Interface.dessine_argent_suffisant(n,n);
-                }
+                Interface.dessine_argent_suffisant(n,n);
             }
-            Interface.liste_ennemi[i].Deplace();
+            liste_ennemis[i].Deplace();
             Interface.choisir_tour(buffer_tour);
         }
         milliSleep(200);

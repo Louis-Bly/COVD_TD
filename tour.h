@@ -17,6 +17,7 @@ class tour{
     int recharge; //recharge=0 -> prêt à tirer
     Color couleur;
 public:
+    tour();
     tour(int xi, int yi, int typei, grille g); //x,y -> coin supérieur gauche
     void affiche(grille g);
     void tire();

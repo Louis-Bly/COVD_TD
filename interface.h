@@ -20,11 +20,11 @@ class interface
     int largeur_case_tour;
     int ecart_case_tour;
 
-public:
-
     int Argent;
     int nb_ennemi;
-    ennemi* liste_ennemi;
+    int nb_tour;
+
+public:
 
 
     //Constructeur
@@ -35,7 +35,16 @@ public:
 
     int get_largeur(){return largeur;};
     int get_hauteur(){return hauteur;};
+    int get_taille_marge(){return taille_marge;};
+    int get_Argent(){return Argent;};
     int get_nb_ennemi(){return nb_ennemi;};
+    int get_nb_tour(){return nb_tour;};
+
+    //Fonctions set:
+
+    void set_Argent(int i){Argent = i;};
+    void set_nb_ennemi(int i){nb_ennemi = i;};
+    void set_nb_tours(int i){nb_tour = i;};
 
     //Fonctions d'affichages
 
@@ -54,7 +63,7 @@ public:
     void dessine_argent_suffisant(int cout, int n);
 
     //TEST
-    void liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t);
+    void liste_test(point position_origine_b, point position_origine_r, point position_origine_a, point position_origine_t, ennemi liste_ennemis[]);
 
 
 };

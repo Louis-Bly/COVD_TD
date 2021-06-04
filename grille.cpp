@@ -5,10 +5,10 @@ grille::grille(int l, int h, int taille_case_i)
     taille_case=taille_case_i;
     nb_largeur_case=l/taille_case;
     nb_hauteur_case=h/taille_case;
-    libre=new bool[nb_hauteur_case*nb_largeur_case];
+    libre_tour=new bool[nb_hauteur_case*nb_largeur_case];
     for (int i=0;i<nb_hauteur_case*nb_largeur_case;i++)
     {
-        libre[i]=true;
+        libre_tour[i]=true;
     }
 }
 
@@ -33,5 +33,5 @@ point grille::get_pos(int place){
 }
 
 void grille::ajout_tour(int place){
-    libre[place] = false;
+    libre_tour[place] = false;
 }

@@ -20,6 +20,7 @@ projectile* liste_projectiles;
 
 void testAstar()
 {
+    int buffer_tour=-1;
     const int largeur_fenetre = 1900;
     const int hauteur_fenetre = 1000;
     const int taille_marge = 160;
@@ -63,12 +64,56 @@ void testAstar()
     position_origine_b.x=Interface.get_largeur()+5*3;
     position_origine_b.y=200;
 
+    point position_origine_r;
+    position_origine_r.x=Interface.get_largeur()+15*3;
+    position_origine_r.y=400;
+
+    point position_origine_a;
+    position_origine_a.x=Interface.get_largeur()+6*3;
+    position_origine_a.y=600;
+
+    point position_origine_t;
+    position_origine_t.x=Interface.get_largeur()+2*3;
+    position_origine_t.y=800;
+
     ennemi E=ennemi_basique(position_origine_b,g);
-    while(true)
+    ennemi E2=ennemi_rapide(position_origine_r,g);
+    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
+    for (int i=0; i<Interface.get_nb_ennemi(); i++)
     {
-        E.Deplace(g,a);
+        liste_ennemis[i].Affiche_ennemi();
+        liste_ennemis[i].Affiche_barre_vie();
+
+    }
+
+
+    liste_tours = new tour [1000]; //g.get_nombre_case après le merge
+    while (Interface.get_nb_ennemi()>0)
+    {
+        g.affiche();
+        for (int i=0; i<Interface.get_nb_ennemi(); i++)
+        {
+            int ennemis_act = Interface.get_nb_ennemi();
+            int argent_act = Interface.get_Argent();
+            liste_ennemis[i].Perte_vie(0,argent_act,i,ennemis_act,liste_ennemis);
+            Interface.set_Argent(argent_act);
+            Interface.set_nb_ennemi(ennemis_act);
+            Interface.Affiche_argent();
+            for (int n=0;n<6;n++)
+            {
+                Interface.dessine_argent_suffisant(n,n);
+            }
+            liste_ennemis[i].Deplace(g,a);
+            Interface.choisir_tour(buffer_tour);
+        }
         milliSleep(200);
     }
+//    while(true)
+//    {
+//        E.Deplace(g,a);
+//        E2.Deplace(g,a);
+//        milliSleep(200);
+//    }
 
 
 

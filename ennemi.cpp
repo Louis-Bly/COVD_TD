@@ -64,8 +64,10 @@ void ennemi::Deplace(grille Grille, point arrivee) //Calcul la direction et depl
     else
     {
         //Test:
+        Grille.set_libre_tour(Grille.get_place(position),true);
         position.x+=dir[direction_actuelle].x*vitesse;
         position.y+=dir[direction_actuelle].y*vitesse;
+        Grille.set_libre_tour(Grille.get_place(position),false);
         changement_de_case(Grille);
 
 //        for (int i=Chemin_ennemi.get_taille_chemin()-1; i>=0;i--)

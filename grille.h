@@ -29,6 +29,7 @@ public:
     int get_nb_hauteur_case(){return nb_hauteur_case;};
 
     void set_libre_ennemi(int i,bool b){libre_ennemi[i]=b;};
+    void set_libre_tour(int i,bool b){libre_tour[i]=b;};
 
     int get_place(point pos);
     point get_pos(int place);

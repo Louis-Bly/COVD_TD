@@ -39,8 +39,21 @@ void testAstar()
     grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
     liste_tours = new tour [1000]; //g.get_nombre_case() après le merge
     g.affiche();
-    int arrivee_i=15;
-    int depart_i=180;
+
+
+    int arrivee_i=38;
+    int depart_i=81;
+
+    for (int i=0; i<27;i++)
+    {
+        int tour=6*i;
+        g.set_libre_ennemi(tour,false);
+        point t=g.get_indices_xy(tour);
+        fillRect(t.x*g.get_taille_case(),t.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLACK);
+    }
+
+
+
     point a= g.get_indices_xy(arrivee_i);
     point dep=g.get_indices_xy(depart_i);
     chemin C=chemin(g);

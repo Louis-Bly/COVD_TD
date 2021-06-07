@@ -27,8 +27,8 @@ int grille::get_place(point pos){
 
 point grille::get_pos(int place){
     point p;
-    p.x = place%nb_largeur_case;
-    p.y = floor(place/nb_largeur_case);
+    p.x = taille_case*(place%nb_largeur_case);
+    p.y = taille_case*floor(place/nb_largeur_case);
     return p;
 }
 

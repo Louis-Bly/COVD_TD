@@ -68,26 +68,38 @@ void test()
     }
     int taille_case = 75;
     grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
-    liste_tours = new tour [1000]; //g.get_nombre_case après le merge
+    liste_tours = new tour [g.get_nombre_case()]; //g.get_nombre_case après le merge
+    liste_projectiles = new projectile [1000]; //g.get_nombre_case après le merge
     while (Interface.get_nb_ennemi()>0)
     {
         g.affiche();
         for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
-            int ennemis_act = Interface.get_nb_ennemi();
-            int argent_act = Interface.get_Argent();
-            liste_ennemis[i].Perte_vie(10,argent_act,i,ennemis_act,liste_ennemis);
-            Interface.set_Argent(argent_act);
-            Interface.set_nb_ennemi(ennemis_act);
             Interface.Affiche_argent();
+            for(int i=0; i<Interface.get_nb_tour(); i++){
+                liste_tours[i].affiche(g);
+                int nbproj = Interface.get_nb_proj();
+                liste_tours[i].tire(Interface.get_nb_ennemi(),nbproj,g.get_taille_case(),liste_ennemis,liste_projectiles);
+                Interface.set_nb_proj(nbproj);
+            }
             for (int n=0;n<6;n++)
             {
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace();
-            Interface.choisir_tour(buffer_tour);
         }
-        milliSleep(200);
+        for(int i=0; i<Interface.get_nb_proj();i++){
+            liste_projectiles[i].deplace();
+            int nb_proj = Interface.get_nb_proj();
+            int nb_ennemi = Interface.get_nb_ennemi();
+            int argent_act = Interface.get_Argent();
+            liste_projectiles[i].collision(i, liste_projectiles, liste_ennemis, nb_proj, nb_ennemi, largeur_fenetre, hauteur_fenetre-taille_marge, argent_act);
+            Interface.set_nb_proj(nb_proj);
+            Interface.set_nb_ennemi(nb_ennemi);
+            Interface.set_Argent(argent_act);
+        }
+        Interface.choisir_tour(buffer_tour,liste_tours, g);
+        milliSleep(100);
     }
 }
 

@@ -25,6 +25,7 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
     nb_ennemi=nb;
     Argent=0;
     nb_tour = 0;
+    nb_proj = 0;
 }
 
 //Affichage en bas de l'écran
@@ -67,7 +68,7 @@ void interface::Affiche_marge()
 }
 
 
-void interface::choisir_tour(int &n)
+void interface::choisir_tour(int &n, tour liste_tours[], grille g)
 {
     if (n==-1) //Si l'on n'a pas encore choisi quelle tour placee
     {
@@ -81,7 +82,7 @@ void interface::choisir_tour(int &n)
     }
     else //Sinon, on s'interesse à la position de la tour
     {
-        if(choisir_position_tour(n)) //Si la position de la tour est possible, on la place
+        if(choisir_position_tour(n, liste_tours, g)) //Si la position de la tour est possible, on la place
         {
             Affiche_case_tour(n); //On deselectionne alors la case associee et la redessinant
         }
@@ -104,7 +105,7 @@ int interface::case_selectionnees(int x, int y)
     return numero; //numero de la case
 }
 
-bool interface::choisir_position_tour(int &n)
+bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g)
 {
     bool bien_place = false;
     if ((n>=0)&&(n<6)) //On verifie qu'une tour a bien ete selectionnee
@@ -121,7 +122,8 @@ bool interface::choisir_position_tour(int &n)
                 {
                     dessine_argent_suffisant(i,i); //On revoit quelles tours sont achetables
                 }
-                drawString(point.x,point.y,std::to_string(n),ORANGE,30); //On dessine la tour(pour l'instant des nombres)
+                liste_tours[nb_tour] = tour(point.x,point.y,n,g); //On dessine la tour
+                nb_tour++;
             }
         }
         else if (((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))||(n>Argent))

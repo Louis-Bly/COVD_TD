@@ -5,15 +5,15 @@ using namespace Imagine;
 
 
 class vect{
-    int x,y;
+    double x,y;
 public:
     vect();
-    vect(int xi,int yi);
-    vect operator*(int k);
+    vect(double xi,double yi);
+    vect operator*(double k);
     int getx(){return x;};
     int gety(){return y;};
-    void setx(int xd){x = xd;};
-    void sety(int yd){y = yd;};
+    void setx(double xd){x = xd;};
+    void sety(double yd){y = yd;};
     vect normalise();
 };
 
@@ -23,6 +23,8 @@ struct point
     int x;
     int y;
     point operator+(vect depl);
+    point operator-(point p2);
+    double norm();
 };
 
 point Souris_clique_gauche();

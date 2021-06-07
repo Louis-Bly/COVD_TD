@@ -5,6 +5,7 @@
 using namespace Imagine;
 
 #include "ennemi.h"
+#include "tour.h"
 #include "chemin.h"
 #include "tools.h"
 
@@ -23,6 +24,7 @@ class interface
     int Argent;
     int nb_ennemi;
     int nb_tour;
+    int nb_proj;
 
 public:
 
@@ -39,12 +41,14 @@ public:
     int get_Argent(){return Argent;};
     int get_nb_ennemi(){return nb_ennemi;};
     int get_nb_tour(){return nb_tour;};
+    int get_nb_proj(){return nb_proj;};
 
     //Fonctions set:
 
     void set_Argent(int i){Argent = i;};
     void set_nb_ennemi(int i){nb_ennemi = i;};
     void set_nb_tours(int i){nb_tour = i;};
+    void set_nb_proj(int i){nb_proj = i;};
 
     //Fonctions d'affichages
 
@@ -54,9 +58,9 @@ public:
     void Affiche_case_tour(int &indice);
 
     //Utilisations des cases pour placer les tours
-    void choisir_tour(int &n);
+    void choisir_tour(int &n, tour liste_tours[], grille g);
     int case_selectionnees(int x, int y);
-    bool choisir_position_tour(int &n); //Prendra aussi les tours en paramètres
+    bool choisir_position_tour(int &n, tour liste_tours[], grille g); //Prendra aussi les tours en paramètres
 
     bool confirmer_placement();
 

@@ -104,7 +104,7 @@ void testAstar()
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace(g,a);
-            Interface.choisir_tour(buffer_tour);
+            Interface.choisir_tour(buffer_tour, liste_tours, g);
         }
         milliSleep(200);
     }
@@ -138,21 +138,6 @@ void testAstar()
 
 void test()
 {
-    point position_origine_b;
-    position_origine_b.x=1500;
-    position_origine_b.y=200;
-
-    point position_origine_r;
-    position_origine_r.x=1500;
-    position_origine_r.y=400;
-
-    point position_origine_a;
-    position_origine_a.x=1500;
-    position_origine_a.y=600;
-
-    point position_origine_t;
-    position_origine_t.x=1500;
-    position_origine_t.y=800;
 
 
     int buffer_tour=-1;
@@ -161,8 +146,28 @@ void test()
     const int taille_marge = 160;
     const int taille_case = 75;
     interface Interface=interface(4,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70);
+
+    point position_origine_b;
+    position_origine_b.x=Interface.get_largeur()+1000;
+    position_origine_b.y=200;
+
+    point position_origine_r;
+    position_origine_r.x=Interface.get_largeur()+1000;
+    position_origine_r.y=400;
+
+    point position_origine_a;
+    position_origine_a.x=Interface.get_largeur()+1000;
+    position_origine_a.y=600;
+
+    point position_origine_t;
+    position_origine_t.x=Interface.get_largeur()+1000;
+    position_origine_t.y=800;
+
     liste_ennemis = new ennemi[4];
     grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
+    liste_tours = new tour [g.get_nombre_case()]; //g.get_nombre_case après le merge
+    liste_projectiles = new projectile [1000]; //g.get_nombre_case après le merge
+    point a = g.get_indices_xy(0);
 
     Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
 
@@ -184,34 +189,45 @@ void test()
         liste_ennemis[i].Affiche_barre_vie();
 
     }
-
-
-    liste_tours = new tour [1000]; //g.get_nombre_case après le merge
     while (Interface.get_nb_ennemi()>0)
     {
+        for(int i=0; i<Interface.get_nb_proj();i++){
+            liste_projectiles[i].efface();
+        }
         g.affiche();
         for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
-            int ennemis_act = Interface.get_nb_ennemi();
-            int argent_act = Interface.get_Argent();
-            liste_ennemis[i].Perte_vie(10,argent_act,i,ennemis_act,liste_ennemis);
-            Interface.set_Argent(argent_act);
-            Interface.set_nb_ennemi(ennemis_act);
             Interface.Affiche_argent();
+            for(int i=0; i<Interface.get_nb_tour(); i++){
+                liste_tours[i].affiche(g);
+                int nbproj = Interface.get_nb_proj();
+                liste_tours[i].tire(Interface.get_nb_ennemi(),nbproj,g.get_taille_case(),liste_ennemis,liste_projectiles);
+                Interface.set_nb_proj(nbproj);
+            }
             for (int n=0;n<6;n++)
             {
                 Interface.dessine_argent_suffisant(n,n);
             }
-            //liste_ennemis[i].Deplace();
-            Interface.choisir_tour(buffer_tour);
+            liste_ennemis[i].Deplace(g,a);
         }
-        milliSleep(200);
+        for(int i=0; i<Interface.get_nb_proj();i++){
+            liste_projectiles[i].deplace();
+            int nb_proj = Interface.get_nb_proj();
+            int nb_ennemi = Interface.get_nb_ennemi();
+            int argent_act = Interface.get_Argent();
+            liste_projectiles[i].collision(i, liste_projectiles, liste_ennemis, nb_proj, nb_ennemi, largeur_fenetre, hauteur_fenetre-taille_marge-10, argent_act);
+            Interface.set_nb_proj(nb_proj);
+            Interface.set_nb_ennemi(nb_ennemi);
+            Interface.set_Argent(argent_act);
+        }
+        Interface.choisir_tour(buffer_tour,liste_tours, g);
+        milliSleep(100);
     }
 }
 
 int main()
 {
-    testAstar();
+    test();
 
     return 0;
 }

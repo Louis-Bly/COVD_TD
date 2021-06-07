@@ -19,9 +19,38 @@ tour::tour(int xi, int yi, int typei, grille g){  //x,y -> coin supérieur gauch
 }
 
 void tour::affiche(grille g){
-    fillRect(pos.x,pos.y,g.get_taille_case(),rayon,couleur);
+    fillRect(pos.x,pos.y,g.get_taille_case(),g.get_taille_case(),couleur);
 }
 
-void tour::tire(){
+bool tour::tire(int nb_ennemis, int &nb_proj, int taille_case, ennemi liste_ennemis[], projectile liste_projectiles[]){
+    if(recharge==0){ //Si la tour est prête à tirer
+        ennemi cible;
+        if(trouve_cible(cible, liste_ennemis, nb_ennemis)){ //Si on trouve un ennemi sur lequel tirer
+            vect dirtir(cible.get_position().x-(pos.x+taille_case/2),cible.get_position().y-(pos.y+taille_case/2));
+            dirtir = dirtir.normalise();
+            projectile proj(pos.x+taille_case/2,pos.y+taille_case/2,type,dirtir);
+            liste_projectiles[nb_proj] = proj;
+            recharge = tps_recharge;
+            nb_proj ++;
+            return true;
+        }
+    }
+    else{
+        recharge--;
+    }
+    return false;
+}
 
+bool tour::trouve_cible(ennemi &cible, ennemi liste_ennemis[], int nb_ennemis){
+    bool trouve = false;
+    double mindist = (liste_ennemis[0].get_position()-pos).norm() + 1;
+    for(int i=0; i<nb_ennemis; i++){
+        double dist = (liste_ennemis[i].get_position()-pos).norm();
+        if(dist < rayon and dist < mindist){
+            mindist = dist;
+            trouve = true;
+            cible = liste_ennemis[i];
+        }
+    }
+    return trouve;
 }

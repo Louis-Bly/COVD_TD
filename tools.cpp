@@ -12,13 +12,13 @@ vect::vect(){
     y=0;
 }
 
-vect::vect(int xi,int yi){
+vect::vect(double xi,double yi){
     x=xi;
     y=yi;
 }
 
 
-vect vect::operator*(int k){
+vect vect::operator*(double k){
     vect prod(k*x,k*y);
     return prod;
 }
@@ -36,6 +36,18 @@ point point::operator+(vect depl){
     sum.x = x+depl.getx();
     sum.y = y+depl.gety();
     return sum;
+}
+
+
+point point::operator-(point p2){
+    point dif;
+    dif.x = x-p2.x;
+    dif.y = y-p2.y;
+    return dif;
+}
+
+double point::norm(){
+    return sqrt(pow(x,2)+pow(y,2));
 }
 
 

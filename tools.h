@@ -26,3 +26,5 @@ struct point
 };
 
 point Souris_clique_gauche();
+
+const point dir[4] = {{1,0},{0,1},{-1,0},{0,-1}};

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "chemin.h"
-#include "tools.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 

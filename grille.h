@@ -26,10 +26,17 @@ public:
     bool get_libre_ennemi(int indice){return libre_ennemi[indice];};
     int get_cout_des_cases(int indice){return cout_des_cases[indice];};
     bool get_libre_tour(int indice){return libre_tour[indice];};
-    int get_taille_case(){return taille_case;};
+    int get_taille_case(){return taille_case;};    
+    int get_nombre_case(){return nb_largeur_case*nb_hauteur_case;};
+    int get_nb_largeur_case(){return nb_largeur_case;};
+    int get_nb_hauteur_case(){return nb_hauteur_case;};
+
     int get_place(point pos);
     point get_pos(int place);
-    int get_nombre_case(){return nb_largeur_case*nb_hauteur_case;};
+
+    point get_indices_xy(int place);
+    int get_indices(point xy);
+
 
 
 

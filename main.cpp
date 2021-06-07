@@ -18,7 +18,45 @@ ennemi* liste_ennemis;
 tour* liste_tours;
 projectile* liste_projectiles;
 
+void testAstar()
+{
+    const int largeur_fenetre = 1900;
+    const int hauteur_fenetre = 1000;
+    const int taille_marge = 160;
+    interface Interface=interface(4,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70);
+    liste_ennemis = new ennemi[4];
 
+    openWindow(Interface.get_largeur(),Interface.get_hauteur());
+    Interface.Affiche_marge();
+    Interface.Affiche_nb_ennemi_restant();
+    Interface.Affiche_argent();
+    for(int i=0;i<6;i++)
+    {
+        int j =i;
+        Interface.Affiche_case_tour(j);
+    }
+    int taille_case = 75;
+    grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
+    liste_tours = new tour [1000]; //g.get_nombre_case() après le merge
+    g.affiche();
+    int arrivee_i=57;
+    int depart_i=62;
+    point a= g.get_indices_xy(arrivee_i);
+    point dep=g.get_indices_xy(depart_i);
+    chemin C=chemin(g);
+    fillRect(a.x*g.get_taille_case(),a.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLUE);
+    fillRect(dep.x*g.get_taille_case(),dep.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), GREEN);
+    bool T=C.Calcul_plus_court_chemin(dep,g,a);
+    if (T)
+    {
+
+        for (int i=0; i<C.get_taille_chemin();i++)
+        {
+            fillRect(i*100,100,100,100,YELLOW);
+        }
+    }
+
+}
 
 void test()
 {
@@ -93,7 +131,7 @@ void test()
 
 int main()
 {
-    test();
+    testAstar();
 
     return 0;
 }

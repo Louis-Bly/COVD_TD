@@ -5,7 +5,8 @@ grille::grille(int l, int h, int taille_case_i)
     taille_case=taille_case_i;
     nb_largeur_case=l/taille_case;
     nb_hauteur_case=h/taille_case;
-    libre_tour=new bool[nb_hauteur_case*nb_largeur_case];
+    libre_tour=new bool[get_nombre_case()];
+    cout_des_cases=new int[get_nombre_case()];
     for (int i=0;i<nb_hauteur_case*nb_largeur_case;i++)
     {
         libre_tour[i]=true;
@@ -32,6 +33,19 @@ point grille::get_pos(int place){
     return p;
 }
 
+point grille::get_indices_xy(int place)
+{
+    point p;
+    p.x = place%nb_largeur_case;
+    p.y = floor(place/nb_largeur_case);
+    return p;
+}
+
+int grille::get_indices(point xy)
+{
+    return xy.x+nb_largeur_case*xy.y;
+}
+
 void grille::ajout_tour(int place){
     libre_tour[place] = false;
 }
@@ -46,7 +60,7 @@ void grille::maj_cout_des_cases()
         }
         else
         {
-            cout_des_cases[i]=get_nombre_case();
+            cout_des_cases[i]=get_nombre_case()*10;
         }
     }
 }

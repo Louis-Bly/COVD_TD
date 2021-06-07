@@ -18,7 +18,10 @@ class ennemi
     point position;
     int hp; //Vie actuelle
     bool vivant;
-    chemin Chemin;
+    chemin Chemin_ennemi;
+    bool dans_le_cadre;
+    int direction_actuelle; //1: va vers la droite; 2: descend; 3: vers la gauche; 4:monte
+    point case_actuelle; //Contient les numéros de lignes/colonnes de la case sur laquelle l'ennemi se trouve
 
     //Forme de l'ennemi (à modifier à la fin)
     int Rayon; //Rayon du cercle (pour l'instant, les ennemis sont des cercles)
@@ -30,7 +33,7 @@ public:
 
     //Constructeur
     ennemi();
-    ennemi(int vitesse, int vie, int recompense,int Hauteur_barre_vie, point position_origine, point barre_vie, Color col, int R);
+    ennemi(int vitesse, int vie, int recompense,int Hauteur_barre_vie, point position_origine, point barre_vie, Color col, int R, grille G);
 
     //Affichages
     void Affiche_ennemi();
@@ -39,7 +42,9 @@ public:
     void Efface_barre_vie();
 
     //Deplacement
-    void Deplace(); //Calcul la direction et deplace
+    void Deplace(grille Grille, point arrivee); //Calcul la direction et deplace
+    void entre_dans_le_cadre(grille Grille, point arrivee);
+    void changement_de_case(grille G);
 
     //Gestion de la vie
     void Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi, ennemi* &liste); //Prends en paramètre un bool d'une fonction de projectile.h (si est touche)
@@ -57,8 +62,8 @@ public:
 
 // Types d'ennemis
 
-ennemi ennemi_basique(point position_origine);
-ennemi ennemi_ameliore(point position_origine);
-ennemi ennemi_rapide(point position_origine);
-ennemi ennemi_tank(point position_origine);
+ennemi ennemi_basique(point position_origine, grille G);
+ennemi ennemi_ameliore(point position_origine, grille G);
+ennemi ennemi_rapide(point position_origine, grille G);
+ennemi ennemi_tank(point position_origine, grille G);
 

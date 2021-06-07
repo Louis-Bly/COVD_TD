@@ -12,6 +12,8 @@ class chemin
 public:
     int get_taille_chemin(){return taille_chemin;};
     int get_chemin_de_ennemi(int i){return chemin_de_ennemi[i];};
+
+    void set_taille_chemin(int taille){taille_chemin=taille;};
     //Constructeur
     chemin();
     chemin(grille G);

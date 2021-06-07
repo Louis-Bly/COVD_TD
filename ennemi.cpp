@@ -7,7 +7,7 @@ ennemi::ennemi()
 
 }
 
-ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_origine, point Dimension_barre_vie, Color col, int R)
+ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_origine, point Dimension_barre_vie, Color col, int R, grille G)
 {
     vitesse=vite;
     vie_max=vie_init;
@@ -19,6 +19,9 @@ ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_o
     Rayon=R;
     Taille_barre_vie=Dimension_barre_vie;
     vivant=true;
+    Chemin_ennemi=chemin(G);
+    dans_le_cadre=false;
+    direction_actuelle=3;
 }
 
 //Affichages
@@ -47,17 +50,65 @@ void ennemi::Efface_barre_vie()
 }
 
 //Deplacement
-void ennemi::Deplace() //Calcul la direction et deplace
+void ennemi::Deplace(grille Grille, point arrivee) //Calcul la direction et deplace
 {
-    //On calculera le plus court chemin avec A* plus tard...
-    //Pour l'instant on se contente d'une ligne droite
     Efface_ennemi();
     Efface_barre_vie();
-    position.x-=vitesse;
+    if (dans_le_cadre==false)//Avant d'apparaître à l'écran
+    {
+        position.x-=vitesse; // Il avance en ligne droite jusqu'à arriver dans la zone de jeu
+        entre_dans_le_cadre(Grille, arrivee);
+    }
+    else
+    {
+        //Test:
+        for (int i=Chemin_ennemi.get_taille_chemin()-1; i>=0;i--)
+        {
+            int indice=Chemin_ennemi.get_chemin_de_ennemi(i);
+            point pi= Grille.get_indices_xy(indice);
+            fillRect(pi.x*Grille.get_taille_case(),pi.y*Grille.get_taille_case(),Grille.get_taille_case(),Grille.get_taille_case(), RED);
+            milliSleep(200);
+        }
+    }
+
     Affiche_ennemi();
     Affiche_barre_vie();
 }
 
+void ennemi::entre_dans_le_cadre(grille Grille, point arrivee) //Attention, x et y du point d'arrivée ne sont pas ses coordonnées en terme de pixel mais le numéro de ligne/colonne
+{
+    if (position.x<Grille.get_taille_case()*Grille.get_nb_largeur_case()) //L'ennemi est entré dans l'écran.
+    {
+        dans_le_cadre=true;
+        int indice_pos=Grille.get_place(position);
+        case_actuelle=Grille.get_indices_xy(indice_pos);
+        Chemin_ennemi.Calcul_plus_court_chemin(case_actuelle,Grille,arrivee);
+
+    }
+}
+
+void ennemi::changement_de_case(grille G)
+{
+    int indice_case_suivante=Chemin_ennemi.get_chemin_de_ennemi(Chemin_ennemi.get_taille_chemin());
+    point case_suivante=G.get_indices_xy(indice_case_suivante);
+    if(case_suivante.x==case_actuelle.x+1)
+    {
+        direction_actuelle=1;
+    }
+    else if(case_suivante.y==case_actuelle.y+1)
+    {
+        direction_actuelle=2;
+    }
+    else if(case_suivante.x==case_actuelle.x-1)
+    {
+        direction_actuelle=3;
+    }
+    else if(case_suivante.y==case_actuelle.y-1)
+    {
+        direction_actuelle=4;
+    }
+    Chemin_ennemi.set_taille_chemin(Chemin_ennemi.get_taille_chemin()-1);
+}
 
 //Gestion de la vie
 
@@ -89,7 +140,7 @@ void ennemi::Perte_vie(int degats_subis, int &Argent, int indice, int &nb_ennemi
 
 // Types d'ennemis
 
-ennemi ennemi_basique(point position_origine)
+ennemi ennemi_basique(point position_origine, grille G)
 {
     int vite=5;
     int vie_init=100;
@@ -101,11 +152,11 @@ ennemi ennemi_basique(point position_origine)
     Color col=YELLOW;
     int R=20;
 
-    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R);
+    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R, G);
     return E;
 }
 
-ennemi ennemi_ameliore(point position_origine)
+ennemi ennemi_ameliore(point position_origine, grille G)
 {
     {
         int vite=6;
@@ -118,12 +169,12 @@ ennemi ennemi_ameliore(point position_origine)
         Color col=RED;
         int R=20;
 
-        ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R);
+        ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R, G);
         return E;
     }
 }
 
-ennemi ennemi_rapide(point position_origine)
+ennemi ennemi_rapide(point position_origine, grille G)
 {
     int vite=15;
     int vie_init=50;
@@ -135,10 +186,10 @@ ennemi ennemi_rapide(point position_origine)
     Color col=BLUE;
     int R=20;
 
-    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R);
+    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R, G);
     return E;
 }
-ennemi ennemi_tank(point position_origine)
+ennemi ennemi_tank(point position_origine, grille G)
 {
     int vite=2;
     int vie_init=500;
@@ -150,6 +201,6 @@ ennemi ennemi_tank(point position_origine)
     Color col=GREEN;
     int R=20;
 
-    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R);
+    ennemi E=ennemi(vite, vie_init, recompense, H, position_origine, Dimension_barre_vie, col, R, G);
     return E;
 }

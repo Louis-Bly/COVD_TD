@@ -51,18 +51,3 @@ int grille::get_indices(point xy)
 void grille::ajout_tour(int place){
     libre_tour[place] = false;
 }
-
-//void grille::maj_cout_des_cases()
-//{
-//    for (int i=0;i<get_nombre_case();i++)
-//    {
-//        if (libre_ennemi[i])
-//        {
-//            cout_des_cases[i]=1;
-//        }
-//        else
-//        {
-//            cout_des_cases[i]=get_nombre_case()*10;
-//        }
-//    }
-//}

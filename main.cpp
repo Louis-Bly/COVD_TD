@@ -42,7 +42,7 @@ void testAstar()
 
 
     int arrivee_i=38;
-    int depart_i=81;
+//    int depart_i=124;
 
     for (int i=0; i<27;i++)
     {
@@ -55,22 +55,39 @@ void testAstar()
 
 
     point a= g.get_indices_xy(arrivee_i);
-    point dep=g.get_indices_xy(depart_i);
-    chemin C=chemin(g);
     fillRect(a.x*g.get_taille_case(),a.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLUE);
-    fillRect(dep.x*g.get_taille_case(),dep.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), GREEN);
-    bool T=C.Calcul_plus_court_chemin(dep,g,a);
-    if (T)
-    {
 
-        for (int i=C.get_taille_chemin()-1; i>=0;i--)
-        {
-            int indice=C.get_chemin_de_ennemi(i);
-            point pi= g.get_indices_xy(indice);
-            fillRect(pi.x*g.get_taille_case(),pi.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), RED);
-            click();
-        }
+    //TEST
+
+    point position_origine_b;
+    position_origine_b.x=Interface.get_largeur()+5*3;
+    position_origine_b.y=200;
+
+    ennemi E=ennemi_basique(position_origine_b,g);
+    while(true)
+    {
+        E.Deplace(g,a);
+        milliSleep(200);
     }
+
+
+
+//    point dep=g.get_indices_xy(depart_i);
+//    chemin C=chemin(g);
+//    fillRect(a.x*g.get_taille_case(),a.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLUE);
+//    fillRect(dep.x*g.get_taille_case(),dep.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), GREEN);
+//    bool T=C.Calcul_plus_court_chemin(dep,g,a);
+//    if (T)
+//    {
+
+//        for (int i=C.get_taille_chemin()-1; i>=0;i--)
+//        {
+//            int indice=C.get_chemin_de_ennemi(i);
+//            point pi= g.get_indices_xy(indice);
+//            fillRect(pi.x*g.get_taille_case(),pi.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), RED);
+//            click();
+//        }
+//    }
 
 }
 
@@ -97,10 +114,12 @@ void test()
     const int largeur_fenetre = 1900;
     const int hauteur_fenetre = 1000;
     const int taille_marge = 160;
+    const int taille_case = 75;
     interface Interface=interface(4,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70);
     liste_ennemis = new ennemi[4];
+    grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
 
-    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis);
+    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
 
 
 
@@ -120,8 +139,8 @@ void test()
         liste_ennemis[i].Affiche_barre_vie();
 
     }
-    int taille_case = 75;
-    grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
+
+
     liste_tours = new tour [1000]; //g.get_nombre_case après le merge
     while (Interface.get_nb_ennemi()>0)
     {
@@ -138,7 +157,7 @@ void test()
             {
                 Interface.dessine_argent_suffisant(n,n);
             }
-            liste_ennemis[i].Deplace();
+            //liste_ennemis[i].Deplace();
             Interface.choisir_tour(buffer_tour);
         }
         milliSleep(200);

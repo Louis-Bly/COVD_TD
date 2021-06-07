@@ -160,10 +160,10 @@ void interface::dessine_argent_suffisant(int cout, int n) //Indique quelles tour
 
 
 //Test
-void interface::liste_test(point position_origine_b,point position_origine_r,point position_origine_a,point position_origine_t, ennemi liste_ennemis[])
+void interface::liste_test(point position_origine_b, point position_origine_r, point position_origine_a, point position_origine_t, ennemi liste_ennemis[], grille g)
 {
-    liste_ennemis[0]=ennemi_basique(position_origine_b);
-    liste_ennemis[1]=ennemi_rapide(position_origine_r);
-    liste_ennemis[2]=ennemi_ameliore(position_origine_a);
-    liste_ennemis[3]=ennemi_tank(position_origine_t);
+    liste_ennemis[0]=ennemi_basique(position_origine_b, g);
+    liste_ennemis[1]=ennemi_rapide(position_origine_r, g);
+    liste_ennemis[2]=ennemi_ameliore(position_origine_a, g);
+    liste_ennemis[3]=ennemi_tank(position_origine_t, g);
 }

@@ -131,8 +131,10 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
         while(indice!=indice_case_init)
         {
             chemin_de_ennemi[i]=indice;
+            int k=chemin_de_ennemi[i];
             indice=predecesseur[indice];
             taille_chemin++;
+            i++;
         }
     }
     return arrive;

@@ -6,10 +6,12 @@ grille::grille(int l, int h, int taille_case_i)
     nb_largeur_case=l/taille_case;
     nb_hauteur_case=h/taille_case;
     libre_tour=new bool[get_nombre_case()];
+    libre_ennemi=new bool[get_nombre_case()];
     cout_des_cases=new int[get_nombre_case()];
     for (int i=0;i<nb_hauteur_case*nb_largeur_case;i++)
     {
         libre_tour[i]=true;
+        libre_ennemi[i]=true;
     }
 }
 

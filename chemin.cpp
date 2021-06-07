@@ -17,13 +17,13 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
 {
 
     //On met à jour le cout d'accès au case
-    Grille.maj_cout_des_cases();
 
     //Définition des variables
     int indice_case_init= Grille.get_indices(position);
     int indice_case_arrivee=Grille.get_indices(arrivee);
     int *cout_estime=new int[Grille.get_nombre_case()]; //cout heuristique permettant d'orienter la recherche dans la bonne direction
     int *cout_partiel=new int[Grille.get_nombre_case()];// Aller de o à i
+    int *cout_acces=new int [Grille.get_nombre_case()]; //Venir sur i depuis un voisin
     int *cout_total=new int[Grille.get_nombre_case()];// cout partiel + cout heuristique
     int *predecesseur=new int[Grille.get_nombre_case()]; // Le i^ème contient l'indice du prédécesseur de la i^ème case
 
@@ -33,13 +33,14 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     for (int i=0;i<Grille.get_nombre_case();i++)
     {
         coord[i]=Grille.get_indices_xy(i);
-        if (Grille.get_cout_des_cases(i)>Grille.get_nombre_case())
+        cout_estime[i]=abs(coord[i].x-arrivee.x)+abs(coord[i].y-arrivee.y);
+        if (Grille.get_libre_ennemi(i))
         {
-            cout_estime[i]=Grille.get_cout_des_cases(i);
+            cout_acces[i]=1;
         }
         else
         {
-            cout_estime[i]=abs(coord[i].x-arrivee.x)+abs(coord[i].y-arrivee.y);
+            cout_acces[i]=1000000;
         }
         cout_partiel[i]=Grille.get_nombre_case()*10;
         cout_total[i]=Grille.get_nombre_case()*10;
@@ -64,16 +65,16 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
             int x=nouveau.x; //Pour debuguer
             int y=nouveau.y; //Pour debuguer
             int nouveau_indice= Grille.get_indices(nouveau);
-            if((nouveau.x>=1)&&(nouveau.y>=0)&&(nouveau.x<Grille.get_nb_largeur_case())&&(nouveau.y<Grille.get_nb_hauteur_case())&&(cout_estime[nouveau_indice]<Grille.get_nombre_case()*5))//Test si la case est sur la grille et si elle n'a pas de tour
+            if((nouveau.x>=1)&&(nouveau.y>=0)&&(nouveau.x<Grille.get_nb_largeur_case())&&(nouveau.y<Grille.get_nb_hauteur_case())&&(Grille.get_libre_ennemi(nouveau_indice)))//Test si la case est sur la grille et si elle n'a pas de tour
             { // On a bien un successeur.
-                if (cout_partiel[nouveau_indice]>cout_partiel[case_active]+Grille.get_cout_des_cases(nouveau_indice)) // On regarde si le cout pour aller de o à case_active + celui pour aller sur nouveau (voisin de case_active) est inférieur à celui trouvé précedement pour aller de o à nouveau
+                if (cout_partiel[nouveau_indice]>cout_partiel[case_active]+cout_acces[nouveau_indice]) // On regarde si le cout pour aller de o à case_active + celui pour aller sur nouveau (voisin de case_active) est inférieur à celui trouvé précedement pour aller de o à nouveau
                 {
                     predecesseur[nouveau_indice]=case_active; //On note le prédecesseur pour pouvoir remonter à la fin
-                    cout_partiel[nouveau_indice]=cout_partiel[case_active]+Grille.get_cout_des_cases(nouveau_indice);
+                    cout_partiel[nouveau_indice]=cout_partiel[case_active]+1;//Grille.get_cout_des_cases(nouveau_indice);
                     cout_total[nouveau_indice]=cout_partiel[nouveau_indice]+cout_estime[nouveau_indice];
 
                     int cpa=cout_partiel[case_active];
-                    int l=Grille.get_cout_des_cases(nouveau_indice);
+                    int l=cout_acces[nouveau_indice];
                     int cp=cout_partiel[nouveau_indice];
                     int ce=cout_estime[nouveau_indice];
                     int cout=cout_total[nouveau_indice]; //Pour debuguer

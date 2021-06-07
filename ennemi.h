@@ -10,6 +10,9 @@ class ennemi
 
     //Parametres fixes
     int vitesse;
+    int temps_de_changement_de_direction; //Correspond au temps entre l'entrée dans une nouvelle case et le changement de direction
+    int temps; //temps depuis l'entrée dans une nouvelle case sans avoir tourné
+
     int vie_max; //Vie initiale
     int recompense; //Argent reçu lors de sa mort
     int Hauteur_barre_vie; //Ecart entre le perso et sa barre de vie (entre les 2 centres respectifs)
@@ -44,6 +47,7 @@ public:
     //Deplacement
     void Deplace(grille Grille, point arrivee); //Calcul la direction et deplace
     void entre_dans_le_cadre(grille Grille, point arrivee);
+    void changement_de_direction(grille G);
     void changement_de_case(grille G);
 
     //Gestion de la vie
@@ -56,6 +60,10 @@ public:
     int get_vie_max(){return vie_max;};
     int get_hp(){return hp;};
     int get_vitesse(){return vitesse;};
+    int get_temps_de_changement_de_direction(){return temps_de_changement_de_direction;};
+    int get_temps(){return temps;};
+
+    void set_temps(int t){temps=t;};
 
 
 };

@@ -10,6 +10,7 @@ ennemi::ennemi()
 ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_origine, point Dimension_barre_vie, Color col, int R, grille G)
 {
     vitesse=vite;
+    temps_de_changement_de_direction=floor(G.get_taille_case()/(2*vite));
     vie_max=vie_init;
     hp=vie_init;
     recompense=reward;
@@ -21,7 +22,8 @@ ennemi::ennemi(int vite, int vie_init, int reward, int Hauteur, point position_o
     vivant=true;
     Chemin_ennemi=chemin(G);
     dans_le_cadre=false;
-    direction_actuelle=3;
+    direction_actuelle=2;
+    temps=0;
 }
 
 //Affichages
@@ -62,13 +64,17 @@ void ennemi::Deplace(grille Grille, point arrivee) //Calcul la direction et depl
     else
     {
         //Test:
-        for (int i=Chemin_ennemi.get_taille_chemin()-1; i>=0;i--)
-        {
-            int indice=Chemin_ennemi.get_chemin_de_ennemi(i);
-            point pi= Grille.get_indices_xy(indice);
-            fillRect(pi.x*Grille.get_taille_case(),pi.y*Grille.get_taille_case(),Grille.get_taille_case(),Grille.get_taille_case(), RED);
-            milliSleep(200);
-        }
+        position.x+=dir[direction_actuelle].x*vitesse;
+        position.y+=dir[direction_actuelle].y*vitesse;
+        changement_de_case(Grille);
+
+//        for (int i=Chemin_ennemi.get_taille_chemin()-1; i>=0;i--)
+//        {
+//            int indice=Chemin_ennemi.get_chemin_de_ennemi(i);
+//            point pi= Grille.get_indices_xy(indice);
+//            fillRect(pi.x*Grille.get_taille_case(),pi.y*Grille.get_taille_case(),Grille.get_taille_case(),Grille.get_taille_case(), RED);
+//            milliSleep(200);
+//        }
     }
 
     Affiche_ennemi();
@@ -81,33 +87,59 @@ void ennemi::entre_dans_le_cadre(grille Grille, point arrivee) //Attention, x et
     {
         dans_le_cadre=true;
         int indice_pos=Grille.get_place(position);
-        case_actuelle=Grille.get_indices_xy(indice_pos);
-        Chemin_ennemi.Calcul_plus_court_chemin(case_actuelle,Grille,arrivee);
+        case_actuelle=Grille.get_indices_xy(indice_pos); //colonne et ligne de la nouvelle case
+        Chemin_ennemi.Calcul_plus_court_chemin(case_actuelle,Grille,arrivee); //on calcul le chemin à suivre
+        changement_de_direction(Grille); //calcul de la direction à prendre jusqu'à la prochaine case
 
     }
 }
 
-void ennemi::changement_de_case(grille G)
+
+
+void ennemi::changement_de_direction(grille G)
 {
-    int indice_case_suivante=Chemin_ennemi.get_chemin_de_ennemi(Chemin_ennemi.get_taille_chemin());
+    int indice_case_suivante=Chemin_ennemi.get_chemin_de_ennemi(Chemin_ennemi.get_taille_chemin()-1);
     point case_suivante=G.get_indices_xy(indice_case_suivante);
     if(case_suivante.x==case_actuelle.x+1)
     {
-        direction_actuelle=1;
+        direction_actuelle=0;
     }
     else if(case_suivante.y==case_actuelle.y+1)
     {
-        direction_actuelle=2;
+        direction_actuelle=1;
     }
     else if(case_suivante.x==case_actuelle.x-1)
     {
-        direction_actuelle=3;
+        direction_actuelle=2;
     }
     else if(case_suivante.y==case_actuelle.y-1)
     {
-        direction_actuelle=4;
+        direction_actuelle=3;
     }
+    int c=Chemin_ennemi.get_taille_chemin();
     Chemin_ennemi.set_taille_chemin(Chemin_ennemi.get_taille_chemin()-1);
+    c=Chemin_ennemi.get_taille_chemin();
+}
+
+void ennemi::changement_de_case(grille G)
+{
+    int indice_pos=G.get_place(position);
+    point nouvelle_case=G.get_indices_xy(indice_pos);
+    if ((nouvelle_case.x!=case_actuelle.x)||(nouvelle_case.y!=case_actuelle.y))
+    {
+        if (temps<temps_de_changement_de_direction)
+        {
+            temps++;
+        }
+        else
+        {
+            temps=0;
+            case_actuelle.x=nouvelle_case.x;
+            case_actuelle.y=nouvelle_case.y;
+
+            changement_de_direction(G);
+        }
+    }
 }
 
 //Gestion de la vie

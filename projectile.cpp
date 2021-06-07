@@ -24,7 +24,6 @@ void projectile::efface(){
 }
 
 void projectile::deplace(){
-    efface();
     pos = pos + vit;
     affiche();
 }

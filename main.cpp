@@ -72,6 +72,9 @@ void test()
     liste_projectiles = new projectile [1000]; //g.get_nombre_case après le merge
     while (Interface.get_nb_ennemi()>0)
     {
+        for(int i=0; i<Interface.get_nb_proj();i++){
+            liste_projectiles[i].efface();
+        }
         g.affiche();
         for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
@@ -93,7 +96,7 @@ void test()
             int nb_proj = Interface.get_nb_proj();
             int nb_ennemi = Interface.get_nb_ennemi();
             int argent_act = Interface.get_Argent();
-            liste_projectiles[i].collision(i, liste_projectiles, liste_ennemis, nb_proj, nb_ennemi, largeur_fenetre, hauteur_fenetre-taille_marge, argent_act);
+            liste_projectiles[i].collision(i, liste_projectiles, liste_ennemis, nb_proj, nb_ennemi, largeur_fenetre, hauteur_fenetre-taille_marge-10, argent_act);
             Interface.set_nb_proj(nb_proj);
             Interface.set_nb_ennemi(nb_ennemi);
             Interface.set_Argent(argent_act);

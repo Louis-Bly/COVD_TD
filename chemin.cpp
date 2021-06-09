@@ -54,7 +54,7 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     cout_total[indice_case_init]=cout_estime[indice_case_init]+cout_partiel[indice_case_init];
 
     // Definition des points en cours de traitement(pour l'instant une liste, plus tard une file de priorité)
-    int* liste_case_active=new int[Grille.get_nombre_case()];
+    int liste_case_active[Grille.get_nombre_case()];
     int nb_case_active=1; //A l'initialisation, il n'y a que le point de départ
     liste_case_active[0]=indice_case_init;
     int case_active;
@@ -62,11 +62,12 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     while ((nb_case_active>0)&&(arrive==false)) //Coeur du A*
     {
         case_active=liste_case_active[0];
-        for (int j=0; j<4;j++)
+        int dir_voisin_init=rand()%4;
+        for (int j=dir_voisin_init; j<4+dir_voisin_init;j++)
         {
             point nouveau;
-            nouveau.x=Grille.get_indices_xy(case_active).x+dir[j].x;
-            nouveau.y=Grille.get_indices_xy(case_active).y+dir[j].y;
+            nouveau.x=Grille.get_indices_xy(case_active).x+dir[j%4].x;
+            nouveau.y=Grille.get_indices_xy(case_active).y+dir[j%4].y;
             int nouveau_indice= Grille.get_indices(nouveau);
             if((nouveau.x>=0)&&(nouveau.y>=0)&&(nouveau.x<Grille.get_nb_largeur_case())&&(nouveau.y<Grille.get_nb_hauteur_case())&&(Grille.get_libre_ennemi(nouveau_indice)))//Test si la case est sur la grille et si elle n'a pas de tour
             { // On a bien un successeur.
@@ -123,15 +124,13 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     }
     if (arrive) //On a trouvé un chemin
     {
-        int i=0;
         taille_chemin = 0;
         int indice=indice_case_arrivee;
         while(indice!=indice_case_init)
         {
-            chemin_de_ennemi[i]=indice; //On retourne les cases du chemin
+            chemin_de_ennemi[taille_chemin]=indice; //On retourne les cases du chemin
             indice=predecesseur[indice];
             taille_chemin++; //On retourne la taille du chemin
-            i++;
         }
     }
 

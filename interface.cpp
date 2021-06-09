@@ -168,6 +168,6 @@ void interface::liste_test(point position_origine_b, point position_origine_r, p
 {
     liste_ennemis[0]=ennemi_basique(position_origine_b, g);
     liste_ennemis[1]=ennemi_rapide(position_origine_r, g);
-    liste_ennemis[2]=ennemi_ameliore(position_origine_a, g);
-    liste_ennemis[3]=ennemi_tank(position_origine_t, g);
+    liste_ennemis[3]=ennemi_ameliore(position_origine_a, g);
+    liste_ennemis[2]=ennemi_tank(position_origine_t, g);
 }

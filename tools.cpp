@@ -65,3 +65,9 @@ point Souris_clique_gauche() {
     } while (e.type!=EVT_NONE);
     return p;
 }
+
+void init_random()
+{
+    srand((unsigned int)time(0));
+    rand();
+}

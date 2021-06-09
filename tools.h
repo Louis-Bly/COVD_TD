@@ -28,5 +28,5 @@ struct point
 };
 
 point Souris_clique_gauche();
-
+void init_random();
 const point dir[4] = {{1,0},{0,1},{-1,0},{0,-1}};

@@ -209,6 +209,10 @@ void test()
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace(g,a);
+            if (liste_ennemis[i].get_dans_le_cadre())
+            {
+                liste_ennemis[i].Chemin_ennemi.Calcul_plus_court_chemin(liste_ennemis[i].get_position(),g,a);
+            }
         }
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].deplace();
@@ -221,6 +225,7 @@ void test()
             Interface.set_Argent(argent_act);
         }
         Interface.choisir_tour(buffer_tour,liste_tours, g);
+
         milliSleep(100);
     }
 }

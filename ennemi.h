@@ -21,7 +21,7 @@ class ennemi
     point position;
     int hp; //Vie actuelle
     bool vivant;
-    chemin Chemin_ennemi;
+
     bool dans_le_cadre;
     int direction_actuelle; //1: va vers la droite; 2: descend; 3: vers la gauche; 4:monte
     point case_actuelle; //Contient les numéros de lignes/colonnes de la case sur laquelle l'ennemi se trouve
@@ -33,7 +33,7 @@ class ennemi
 
     //Fonctions
 public:
-
+    chemin Chemin_ennemi;
     //Constructeur
     ennemi();
     ennemi(int vitesse, int vie, int recompense,int Hauteur_barre_vie, point position_origine, point barre_vie, Color col, int R, grille G);
@@ -62,6 +62,7 @@ public:
     int get_vitesse(){return vitesse;};
     int get_temps_de_changement_de_direction(){return temps_de_changement_de_direction;};
     int get_temps(){return temps;};
+    bool get_dans_le_cadre(){return dans_le_cadre;};
 
     void set_temps(int t){temps=t;};
 

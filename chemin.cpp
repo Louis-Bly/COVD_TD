@@ -8,9 +8,13 @@ chemin::chemin()
 chemin::chemin(grille G)
 {
     direction= new point[G.get_nombre_case()];
-    cout_des_cases=new int[G.get_nombre_case()];
     chemin_de_ennemi=new int[G.get_nombre_case()];
     taille_chemin=0;
+}
+
+chemin::~chemin()
+{
+
 }
 
 bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrivee) //Point arrivee/depart et le numero de ligne/colonne
@@ -129,5 +133,12 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
             i++;
         }
     }
+    delete []cout_acces;
+    delete [] cout_partiel;
+    delete [] cout_estime;
+    delete [] cout_total;
+    delete [] predecesseur;
+    delete [] coord;
+
     return arrive; //On retourne vrai si un chemin a été trouvé, faux sinon.
 }

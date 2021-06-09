@@ -5,7 +5,6 @@
 class chemin
 {
     point* direction;
-    int* cout_des_cases;
     int* chemin_de_ennemi;
     int taille_chemin;
 
@@ -18,9 +17,13 @@ public:
     chemin();
     chemin(grille G);
 
+    //Destructeur
+    ~chemin();
+
 
     //Fonction
-    void maj_cout_des_cases(grille Grille);
+
+    //void maj_cout_des_cases(grille Grille);
 
     bool Calcul_plus_court_chemin(point position,grille Grille, point arrivee); //Retourne une liste de points (haut, gauche, bas, droite)
 

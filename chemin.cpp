@@ -26,13 +26,13 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     int indice_case_arrivee=Grille.get_indices(arrivee);
 
     //Définition des différents couts
-    int *cout_estime=new int[Grille.get_nombre_case()]; //cout heuristique permettant d'orienter la recherche dans la bonne direction
-    int *cout_partiel=new int[Grille.get_nombre_case()];// Aller de l'origine à la case i
-    int *cout_acces=new int [Grille.get_nombre_case()]; //Venir sur i depuis un voisin
-    int *cout_total=new int[Grille.get_nombre_case()];// cout partiel + cout heuristique
-    int *predecesseur=new int[Grille.get_nombre_case()]; // Le i^ème contient l'indice du prédécesseur de la i^ème case
+    int cout_estime[Grille.get_nombre_case()]; //cout heuristique permettant d'orienter la recherche dans la bonne direction
+    int cout_partiel[Grille.get_nombre_case()];// Aller de l'origine à la case i
+    int cout_acces[Grille.get_nombre_case()]; //Venir sur i depuis un voisin
+    int cout_total[Grille.get_nombre_case()];// cout partiel + cout heuristique
+    int predecesseur[Grille.get_nombre_case()]; // Le i^ème contient l'indice du prédécesseur de la i^ème case
 
-    point* coord=new point[Grille.get_nombre_case()]; //Contient les coordonnées x,y de la case(x=0 à nb_largeur_case)
+    point coord[Grille.get_nombre_case()]; //Contient les coordonnées x,y de la case(x=0 à nb_largeur_case)
 
     //Initialisation des couts d'acces aux cases en fonction du placement des tours
     for (int i=0;i<Grille.get_nombre_case();i++)
@@ -124,6 +124,7 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
     if (arrive) //On a trouvé un chemin
     {
         int i=0;
+        taille_chemin = 0;
         int indice=indice_case_arrivee;
         while(indice!=indice_case_init)
         {
@@ -133,12 +134,6 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
             i++;
         }
     }
-    delete []cout_acces;
-    delete [] cout_partiel;
-    delete [] cout_estime;
-    delete [] cout_total;
-    delete [] predecesseur;
-    delete [] coord;
 
     return arrive; //On retourne vrai si un chemin a été trouvé, faux sinon.
 }

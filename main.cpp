@@ -149,24 +149,24 @@ void test()
 
     point position_origine_b;
     position_origine_b.x=Interface.get_largeur()+1000;
-    position_origine_b.y=200;
+    position_origine_b.y=floor(taille_case/2);
 
     point position_origine_r;
     position_origine_r.x=Interface.get_largeur()+1000;
-    position_origine_r.y=400;
+    position_origine_r.y=floor(taille_case/2)+taille_case*3;
 
     point position_origine_a;
     position_origine_a.x=Interface.get_largeur()+1000;
-    position_origine_a.y=600;
+    position_origine_a.y=floor(taille_case/2)+taille_case*6;
 
     point position_origine_t;
     position_origine_t.x=Interface.get_largeur()+1000;
-    position_origine_t.y=800;
+    position_origine_t.y=floor(taille_case/2)+taille_case*9;
 
     liste_ennemis = new ennemi[4];
     grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
     liste_tours = new tour [g.get_nombre_case()]; //g.get_nombre_case après le merge
-    liste_projectiles = new projectile [1000]; //g.get_nombre_case après le merge
+    liste_projectiles = new projectile [g.get_nombre_case()]; //g.get_nombre_case après le merge
     point a = g.get_indices_xy(0);
 
     Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);

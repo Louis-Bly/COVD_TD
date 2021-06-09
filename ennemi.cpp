@@ -69,14 +69,6 @@ void ennemi::Deplace(grille Grille, point arrivee) //Calcul la direction et depl
         position.y+=dir[direction_actuelle].y*vitesse;
         Grille.set_libre_tour(Grille.get_place(position),false);
         changement_de_case(Grille);
-
-//        for (int i=Chemin_ennemi.get_taille_chemin()-1; i>=0;i--)
-//        {
-//            int indice=Chemin_ennemi.get_chemin_de_ennemi(i);
-//            point pi= Grille.get_indices_xy(indice);
-//            fillRect(pi.x*Grille.get_taille_case(),pi.y*Grille.get_taille_case(),Grille.get_taille_case(),Grille.get_taille_case(), RED);
-//            milliSleep(200);
-//        }
     }
 
     Affiche_ennemi();

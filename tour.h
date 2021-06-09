@@ -8,7 +8,7 @@ using namespace Imagine;
 
 const int nb_type_tour = 1;
 const int rayon_tour[nb_type_tour] = {500};
-const int tps_recharge_tour[nb_type_tour] = {10};
+const int tps_recharge_tour[nb_type_tour] = {100000000};
 const Color couleur_tour[nb_type_tour] = {RED};
 
 class tour{

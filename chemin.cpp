@@ -64,7 +64,7 @@ bool chemin::Calcul_plus_court_chemin(point position,grille Grille, point arrive
             nouveau.x=Grille.get_indices_xy(case_active).x+dir[j].x;
             nouveau.y=Grille.get_indices_xy(case_active).y+dir[j].y;
             int nouveau_indice= Grille.get_indices(nouveau);
-            if((nouveau.x>=1)&&(nouveau.y>=0)&&(nouveau.x<Grille.get_nb_largeur_case())&&(nouveau.y<Grille.get_nb_hauteur_case())&&(Grille.get_libre_ennemi(nouveau_indice)))//Test si la case est sur la grille et si elle n'a pas de tour
+            if((nouveau.x>=0)&&(nouveau.y>=0)&&(nouveau.x<Grille.get_nb_largeur_case())&&(nouveau.y<Grille.get_nb_hauteur_case())&&(Grille.get_libre_ennemi(nouveau_indice)))//Test si la case est sur la grille et si elle n'a pas de tour
             { // On a bien un successeur.
                 if (cout_partiel[nouveau_indice]>cout_partiel[case_active]+cout_acces[nouveau_indice]) // On regarde si le cout pour aller de o à case_active + celui pour aller sur nouveau (voisin de case_active) est inférieur à celui trouvé précedement pour aller de o à nouveau
                 {

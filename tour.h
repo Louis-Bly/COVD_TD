@@ -6,10 +6,10 @@
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
-const int nb_type_tour = 1;
-const int rayon_tour[nb_type_tour] = {500};
-const int tps_recharge_tour[nb_type_tour] = {100000000};
-const Color couleur_tour[nb_type_tour] = {RED};
+const int nb_type_tour = 5;
+const int rayon_tour[nb_type_tour] = {0,400,175,400,500};
+const int tps_recharge_tour[nb_type_tour] = {0,10,20,30,40};
+const Color couleur_tour[nb_type_tour] = {ORANGE,RED,BLUE,GREEN,BLACK};
 
 class tour{
     point pos;

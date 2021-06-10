@@ -61,19 +61,19 @@ void testAstar()
     //TEST
 
     point position_origine_b;
-    position_origine_b.x=Interface.get_largeur()+5*3;
+    position_origine_b.x=Interface.get_largeur()+50;
     position_origine_b.y=200;
 
     point position_origine_r;
-    position_origine_r.x=Interface.get_largeur()+15*3;
+    position_origine_r.x=Interface.get_largeur()+100;
     position_origine_r.y=400;
 
     point position_origine_a;
-    position_origine_a.x=Interface.get_largeur()+6*3;
+    position_origine_a.x=Interface.get_largeur()+50;
     position_origine_a.y=600;
 
     point position_origine_t;
-    position_origine_t.x=Interface.get_largeur()+2*3;
+    position_origine_t.x=Interface.get_largeur()+25;
     position_origine_t.y=800;
 
     ennemi E=ennemi_basique(position_origine_b,g);
@@ -90,6 +90,7 @@ void testAstar()
     liste_tours = new tour [1000]; //g.get_nombre_case après le merge
     while (Interface.get_nb_ennemi()>0)
     {
+        Interface.Affiche_marge();
         g.affiche();
         for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
@@ -195,6 +196,7 @@ void test()
     }
     while (Interface.get_nb_ennemi()>0)
     {
+        Interface.Affiche_marge();
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].efface();
         }

@@ -23,7 +23,7 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
 
     nb_ennemi_initial=nb;
     nb_ennemi=nb;
-    Argent=0;
+    Argent=10;
     nb_tour = 0;
     nb_proj = 0;
 }
@@ -112,7 +112,7 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, enne
     {
         point point;
         point=Souris_clique_gauche(); //Choix de la position
-        if (((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
+        if (((point.x>0)&&(point.x<g.get_taille_case()*g.get_nb_largeur_case())&&(point.y>0)&&(point.y<g.get_taille_case()*g.get_nb_hauteur_case()))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
         {
             bien_place=g.get_libre_tour(g.get_place(point));
             g.set_libre_ennemi(g.get_place(point), false);
@@ -156,10 +156,10 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
 
                 g.set_libre_ennemi(g.get_place(p), true);
                 bloque=true;
-//                for (int j=0; j<=i;j++)
-//                {
-//                    liste_ennemi[j].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[j].get_position())),g,a);
-//                }
+                for (int j=0; j<=i;j++)
+                {
+                    liste_ennemi[j].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[j].get_position())),g,a);
+                }
                 return bloque;
             }
         }

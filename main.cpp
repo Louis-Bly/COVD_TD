@@ -10,6 +10,7 @@ using namespace std;
 #include "grille.h"
 #include "tour.h"
 #include "projectile.h"
+#include "menu_principal.h"
 
 #include <string>
 using namespace std;
@@ -17,124 +18,6 @@ using namespace std;
 ennemi* liste_ennemis;
 tour* liste_tours;
 projectile* liste_projectiles;
-
-void testAstar()
-{
-    int buffer_tour=-1;
-    const int largeur_fenetre = 1900;
-    const int hauteur_fenetre = 1000;
-    const int taille_marge = 160;
-    interface Interface=interface(4,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70);
-    liste_ennemis = new ennemi[4];
-
-    openWindow(Interface.get_largeur(),Interface.get_hauteur());
-    Interface.Affiche_marge();
-    Interface.Affiche_nb_ennemi_restant();
-    Interface.Affiche_argent();
-    for(int i=0;i<6;i++)
-    {
-        int j =i;
-        Interface.Affiche_case_tour(j);
-    }
-    int taille_case = 75;
-    grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
-    liste_tours = new tour [1000]; //g.get_nombre_case() après le merge
-    g.affiche();
-
-
-    int arrivee_i=38;
-//    int depart_i=124;
-
-    for (int i=0; i<27;i++)
-    {
-        int tour=6*i;
-        g.set_libre_ennemi(tour,false);
-        point t=g.get_indices_xy(tour);
-        fillRect(t.x*g.get_taille_case(),t.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLACK);
-    }
-
-
-
-    point a= g.get_indices_xy(arrivee_i);
-    fillRect(a.x*g.get_taille_case(),a.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLUE);
-
-    //TEST
-
-    point position_origine_b;
-    position_origine_b.x=Interface.get_largeur()+5*3;
-    position_origine_b.y=200;
-
-    point position_origine_r;
-    position_origine_r.x=Interface.get_largeur()+15*3;
-    position_origine_r.y=400;
-
-    point position_origine_a;
-    position_origine_a.x=Interface.get_largeur()+6*3;
-    position_origine_a.y=600;
-
-    point position_origine_t;
-    position_origine_t.x=Interface.get_largeur()+2*3;
-    position_origine_t.y=800;
-
-    ennemi E=ennemi_basique(position_origine_b,g);
-    ennemi E2=ennemi_rapide(position_origine_r,g);
-    Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
-    for (int i=0; i<Interface.get_nb_ennemi(); i++)
-    {
-        liste_ennemis[i].Affiche_ennemi();
-        liste_ennemis[i].Affiche_barre_vie();
-
-    }
-
-
-    liste_tours = new tour [1000]; //g.get_nombre_case après le merge
-    while (Interface.get_nb_ennemi()>0)
-    {
-        g.affiche();
-        for (int i=0; i<Interface.get_nb_ennemi(); i++)
-        {
-            int ennemis_act = Interface.get_nb_ennemi();
-            int argent_act = Interface.get_Argent();
-            liste_ennemis[i].Perte_vie(0,argent_act,i,ennemis_act,liste_ennemis);
-            Interface.set_Argent(argent_act);
-            Interface.set_nb_ennemi(ennemis_act);
-            Interface.Affiche_argent();
-            for (int n=0;n<6;n++)
-            {
-                Interface.dessine_argent_suffisant(n,n);
-            }
-            liste_ennemis[i].Deplace(g,a);
-            Interface.choisir_tour(buffer_tour, liste_tours, g, liste_ennemis, a);
-        }
-        milliSleep(200);
-    }
-//    while(true)
-//    {
-//        E.Deplace(g,a);
-//        E2.Deplace(g,a);
-//        milliSleep(200);
-//    }
-
-
-
-//    point dep=g.get_indices_xy(depart_i);
-//    chemin C=chemin(g);
-//    fillRect(a.x*g.get_taille_case(),a.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), BLUE);
-//    fillRect(dep.x*g.get_taille_case(),dep.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), GREEN);
-//    bool T=C.Calcul_plus_court_chemin(dep,g,a);
-//    if (T)
-//    {
-
-//        for (int i=C.get_taille_chemin()-1; i>=0;i--)
-//        {
-//            int indice=C.get_chemin_de_ennemi(i);
-//            point pi= g.get_indices_xy(indice);
-//            fillRect(pi.x*g.get_taille_case(),pi.y*g.get_taille_case(),g.get_taille_case(),g.get_taille_case(), RED);
-//            click();
-//        }
-//    }
-
-}
 
 void test()
 {
@@ -169,8 +52,7 @@ void test()
     liste_tours = new tour [g.get_nombre_case()]; //g.get_nombre_case après le merge
     liste_projectiles = new projectile [g.get_nombre_case()]; //g.get_nombre_case après le merge
     int indice_arrivee=0;
-    point a = g.get_indices_xy(indice_arrivee);
-//    g.set_libre_tour(indice_arrivee, false);
+    point a = g.get_indices_xy(indice_arrivee);// On pourrait empecher le joueur de placer une tour sur la case d'arrivee ici, mais étant donné que l'on vérifie que les ennemis peuvent toujours rejoindre l'arrivée à chaque nouvelle tour, il est inutile de bloquer l'arrivee ici
 
 
     Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
@@ -178,6 +60,8 @@ void test()
 
 
     openWindow(Interface.get_largeur(),Interface.get_hauteur());
+    drawArrow(100,100,200,200,RED,50,50,0,8);
+    click();
     Interface.Affiche_marge();
     Interface.Affiche_nb_ennemi_restant();
     Interface.Affiche_argent();
@@ -213,10 +97,11 @@ void test()
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace(g,a);
+
             //TEST
             int ar=0;
             int k=Interface.get_nb_ennemi();
-            if ((liste_ennemis[i].get_position().x<taille_case)&&(liste_ennemis[i].get_position().y<taille_case))
+            if ((liste_ennemis[i].get_case_actuelle().x==a.x)&&(liste_ennemis[i].get_case_actuelle().y==a.y))
             {
                 liste_ennemis[i].Perte_vie(liste_ennemis[i].get_hp(), ar, i, k, liste_ennemis);
                 Interface.set_nb_ennemi(k);
@@ -226,6 +111,7 @@ void test()
                 liste_ennemis[i].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemis[i].get_position())),g,a);
             }
             //TEST
+
         }
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].deplace();
@@ -247,7 +133,13 @@ void test()
 
 int main()
 {
-    test();
+    const int largeur_fenetre = 1900;
+    const int hauteur_fenetre = 1000;
+    const int marge_cote = 400;
+    Menu M(largeur_fenetre, hauteur_fenetre, marge_cote);
+    M.Menu_principal();
+//    test();
+
 
     return 0;
 }

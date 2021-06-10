@@ -63,6 +63,7 @@ public:
     int get_temps_de_changement_de_direction(){return temps_de_changement_de_direction;};
     int get_temps(){return temps;};
     bool get_dans_le_cadre(){return dans_le_cadre;};
+    point get_case_actuelle(){return case_actuelle;};
 
     void set_temps(int t){temps=t;};
 

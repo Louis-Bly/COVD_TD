@@ -112,7 +112,7 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, enne
     {
         point point;
         point=Souris_clique_gauche(); //Choix de la position
-        if (((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
+        if (((point.x>0)&&(point.x<g.get_taille_case()*(g.get_nb_largeur_case()-1))&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu ;;; On ne peut pas mettre de tours la ou les ennemis arrivent
         {
             bien_place=g.get_libre_tour(g.get_place(point));
             g.set_libre_ennemi(g.get_place(point), false);
@@ -146,7 +146,22 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
 {
     bool bloque=false;
 
+    //On teste les points de départs
+    chemin c=chemin(g);
+    for (int i=0; i<g.get_nb_hauteur_case();i++)
+    {
+        point dep;
+        dep.y=i;
+        dep.x=g.get_nb_largeur_case()-1;
+        if (c.Calcul_plus_court_chemin(dep,g,a)==false)
+        {
+            g.set_libre_ennemi(g.get_place(p), true);
+            bloque=true;
+            return bloque;
+        }
+    }
 
+    // On teste les ennemis present sur le terrain
     for (int i=0; i<nb_ennemi;i++)
     {
         if (liste_ennemi[i].get_dans_le_cadre())
@@ -156,10 +171,6 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
 
                 g.set_libre_ennemi(g.get_place(p), true);
                 bloque=true;
-//                for (int j=0; j<=i;j++)
-//                {
-//                    liste_ennemi[j].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[j].get_position())),g,a);
-//                }
                 return bloque;
             }
         }

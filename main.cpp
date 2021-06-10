@@ -104,7 +104,7 @@ void testAstar()
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace(g,a);
-            Interface.choisir_tour(buffer_tour, liste_tours, g);
+            Interface.choisir_tour(buffer_tour, liste_tours, g, liste_ennemis, a);
         }
         milliSleep(200);
     }
@@ -168,7 +168,10 @@ void test()
     grille g(largeur_fenetre,hauteur_fenetre-taille_marge,taille_case);
     liste_tours = new tour [g.get_nombre_case()]; //g.get_nombre_case après le merge
     liste_projectiles = new projectile [g.get_nombre_case()]; //g.get_nombre_case après le merge
-    point a = g.get_indices_xy(0);
+    int indice_arrivee=0;
+    point a = g.get_indices_xy(indice_arrivee);
+//    g.set_libre_tour(indice_arrivee, false);
+
 
     Interface.liste_test(position_origine_b,position_origine_r,position_origine_a,position_origine_t, liste_ennemis, g);
 
@@ -210,10 +213,19 @@ void test()
                 Interface.dessine_argent_suffisant(n,n);
             }
             liste_ennemis[i].Deplace(g,a);
+            //TEST
+            int ar=0;
+            int k=Interface.get_nb_ennemi();
+            if ((liste_ennemis[i].get_position().x<taille_case)&&(liste_ennemis[i].get_position().y<taille_case))
+            {
+                liste_ennemis[i].Perte_vie(liste_ennemis[i].get_hp(), ar, i, k, liste_ennemis);
+                Interface.set_nb_ennemi(k);
+            }
             if (liste_ennemis[i].get_dans_le_cadre())
             {
                 liste_ennemis[i].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemis[i].get_position())),g,a);
             }
+            //TEST
         }
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].deplace();
@@ -225,7 +237,9 @@ void test()
             Interface.set_nb_ennemi(nb_ennemi);
             Interface.set_Argent(argent_act);
         }
-        Interface.choisir_tour(buffer_tour,liste_tours, g);
+        Interface.choisir_tour(buffer_tour,liste_tours, g, liste_ennemis, a);
+
+
 
         milliSleep(100);
     }

@@ -94,6 +94,7 @@ void ennemi::changement_de_direction(grille G)
 {
     int indice_case_suivante=Chemin_ennemi.get_chemin_de_ennemi(Chemin_ennemi.get_taille_chemin()-1);
     point case_suivante=G.get_indices_xy(indice_case_suivante);
+    G.set_libre_tour(indice_case_suivante,false);
     if(case_suivante.x==case_actuelle.x+1)
     {
         direction_actuelle=0;

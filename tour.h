@@ -22,6 +22,8 @@ public:
     tour();
     tour(int xi, int yi, int typei, grille g); //x,y -> coin supérieur gauche
     void affiche(grille g);
+
+    void efface(grille g);
     bool tire(int nb_ennemis, int &nb_proj, int taille_case, ennemi liste_ennemis[], projectile liste_projectiles[]);
     bool trouve_cible(ennemi &cible, ennemi liste_ennemis[], int nb_ennemis);
 

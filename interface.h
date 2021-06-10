@@ -58,13 +58,15 @@ public:
     void Affiche_case_tour(int &indice);
 
     //Utilisations des cases pour placer les tours
-    void choisir_tour(int &n, tour liste_tours[], grille g);
+    void choisir_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a);
     int case_selectionnees(int x, int y);
-    bool choisir_position_tour(int &n, tour liste_tours[], grille g); //Prendra aussi les tours en paramètres
+    bool choisir_position_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a); //Prendra aussi les tours en paramètres
 
     bool confirmer_placement();
 
     void dessine_argent_suffisant(int cout, int n);
+
+    bool verification_chemin(ennemi liste_ennemi[], point p,  grille g, point a);
 
     //TEST
     void liste_test(point position_origine_b, point position_origine_r, point position_origine_a, point position_origine_t, ennemi liste_ennemis[], grille g);

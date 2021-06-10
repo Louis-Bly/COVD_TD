@@ -22,6 +22,10 @@ void tour::affiche(grille g){
     fillRect(pos.x,pos.y,g.get_taille_case(),g.get_taille_case(),couleur);
 }
 
+void tour::efface(grille g){
+    fillRect(pos.x,pos.y,g.get_taille_case(),g.get_taille_case(),WHITE);
+}
+
 bool tour::tire(int nb_ennemis, int &nb_proj, int taille_case, ennemi liste_ennemis[], projectile liste_projectiles[]){
     if(recharge==0){ //Si la tour est prête à tirer
         ennemi cible;

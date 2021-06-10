@@ -68,7 +68,7 @@ void interface::Affiche_marge()
 }
 
 
-void interface::choisir_tour(int &n, tour liste_tours[], grille g)
+void interface::choisir_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a)
 {
     if (n==-1) //Si l'on n'a pas encore choisi quelle tour placee
     {
@@ -82,7 +82,7 @@ void interface::choisir_tour(int &n, tour liste_tours[], grille g)
     }
     else //Sinon, on s'interesse à la position de la tour
     {
-        if(choisir_position_tour(n, liste_tours, g)) //Si la position de la tour est possible, on la place
+        if(choisir_position_tour(n, liste_tours, g, liste_ennemi, a)) //Si la position de la tour est possible, on la place
         {
             Affiche_case_tour(n); //On deselectionne alors la case associee et la redessinant
         }
@@ -105,7 +105,7 @@ int interface::case_selectionnees(int x, int y)
     return numero; //numero de la case
 }
 
-bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g)
+bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a)
 {
     bool bien_place = false;
     if ((n>=0)&&(n<6)) //On verifie qu'une tour a bien ete selectionnee
@@ -115,14 +115,18 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g)
         if (((point.x>0)&&(point.x<largeur)&&(point.y>0)&&(point.y<hauteur-taille_marge))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
         {
             bien_place=g.get_libre_tour(g.get_place(point));
-            if (bien_place)
+            g.set_libre_ennemi(g.get_place(point), false);
+            bool gene=verification_chemin(liste_ennemi, point, g, a); //On verifie que l'ajout de la tour n'empeche pas les ennemis d'atteindre leur destination
+
+
+            if ((bien_place)&&(gene==false))
             {
                 Argent-=n;//On enleve le cout à l'argent (pour l'instant n)
                 for (int i=0;i<6;i++)
                 {
                     dessine_argent_suffisant(i,i); //On revoit quelles tours sont achetables
                 }
-                g.set_libre_ennemi(g.get_place(point), false);
+
                 g.set_libre_tour(g.get_place(point), false);
                 liste_tours[nb_tour] = tour(point.x,point.y,n,g); //On dessine la tour
                 nb_tour++;
@@ -136,6 +140,31 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g)
         }
     }
     return bien_place;
+}
+
+bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, point a)
+{
+    bool bloque=false;
+
+
+    for (int i=0; i<nb_ennemi;i++)
+    {
+        if (liste_ennemi[i].get_dans_le_cadre())
+        {
+            if (liste_ennemi[i].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[i].get_position())),g,a)==false)
+            {
+
+                g.set_libre_ennemi(g.get_place(p), true);
+                bloque=true;
+//                for (int j=0; j<=i;j++)
+//                {
+//                    liste_ennemi[j].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[j].get_position())),g,a);
+//                }
+                return bloque;
+            }
+        }
+    }
+    return bloque;
 }
 
 bool interface::confirmer_placement() //Ne sert à rien

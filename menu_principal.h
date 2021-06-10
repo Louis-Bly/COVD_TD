@@ -19,6 +19,7 @@ class Menu
     Color titre;
     string nom_du_jeu;
     string ecran_actif;
+    int taille_tour;
 
 
 
@@ -26,7 +27,7 @@ class Menu
 public:
 
     Menu();
-    Menu(int l, int h, int e);
+    Menu(int l, int h, int e, int t_tour);
 
     void Menu_principal();
 
@@ -43,5 +44,9 @@ public:
 
 
     void regle();
+
+    void Info_ennemi();
+
+    void Info_tour();
 
 };

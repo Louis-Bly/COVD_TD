@@ -210,9 +210,9 @@ void test()
                 liste_tours[i].tire(Interface.get_nb_ennemi(),nbproj,g.get_taille_case(),liste_ennemis,liste_projectiles);
                 Interface.set_nb_proj(nbproj);
             }
-            for (int n=0;n<6;n++)
+            for (int n=0;n<5;n++)
             {
-                Interface.dessine_argent_suffisant(n,n);
+                Interface.dessine_argent_suffisant(cout_tour[n],n);
             }
             liste_ennemis[i].Deplace(g,a);
             //TEST

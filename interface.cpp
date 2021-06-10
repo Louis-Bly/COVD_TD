@@ -52,9 +52,9 @@ void interface::Affiche_case_tour(int &indice)
     indice=-1;
 
     //On affiche aussi quelles tours sont achetables
-    for (int n=0;n<6;n++)
+    for (int n=0;n<5;n++)
     {
-        dessine_argent_suffisant(n,n);
+        dessine_argent_suffisant(cout_tour[n],n);
     }
 }
 
@@ -108,28 +108,45 @@ int interface::case_selectionnees(int x, int y)
 bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a)
 {
     bool bien_place = false;
+    bool place_sur_tour = false;
     if ((n>=0)&&(n<6)) //On verifie qu'une tour a bien ete selectionnee
     {
         point point;
         point=Souris_clique_gauche(); //Choix de la position
-        if (((point.x>0)&&(point.x<g.get_taille_case()*g.get_nb_largeur_case())&&(point.y>0)&&(point.y<g.get_taille_case()*g.get_nb_hauteur_case()))&&(n<=Argent)) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
+        if (((point.x>0)&&(point.x<g.get_taille_case()*g.get_nb_largeur_case())&&(point.y>0)&&(point.y<g.get_taille_case()*g.get_nb_hauteur_case()))) //n sera à changer avec le prix de la tour ;;; On verifie que l'on a clique sur l'ecran de jeu
         {
             bien_place=g.get_libre_tour(g.get_place(point));
+            place_sur_tour = not g.get_libre_ennemi(g.get_place(point));
             g.set_libre_ennemi(g.get_place(point), false);
             bool gene=verification_chemin(liste_ennemi, point, g, a); //On verifie que l'ajout de la tour n'empeche pas les ennemis d'atteindre leur destination
 
-
-            if ((bien_place)&&(gene==false))
+            if ((bien_place)&&(gene==false)&&(cout_tour[n]<=Argent))
             {
-                Argent-=n;//On enleve le cout à l'argent (pour l'instant n)
-                for (int i=0;i<6;i++)
+                Argent-=cout_tour[n];//On enleve le cout à l'argent (pour l'instant n)
+                for (int i=0;i<5;i++)
                 {
-                    dessine_argent_suffisant(i,i); //On revoit quelles tours sont achetables
+                    dessine_argent_suffisant(cout_tour[i],i); //On revoit quelles tours sont achetables
                 }
-
                 g.set_libre_tour(g.get_place(point), false);
                 liste_tours[nb_tour] = tour(point.x,point.y,n,g); //On dessine la tour
                 nb_tour++;
+            }
+            else if(n==5 and place_sur_tour){
+                for(int i=0; i<nb_tour; i++){
+                    if(g.get_pos(g.get_place(point))==liste_tours[i].get_pos()){
+                        Argent += floor(0.75*cout_tour[liste_tours[i].get_type()]);
+                        for (int j=0;j<5;j++)
+                        {
+                            dessine_argent_suffisant(cout_tour[j],j); //On revoit quelles tours sont achetables
+                        }
+                        g.set_libre_tour(g.get_place(point), true);
+                        g.set_libre_ennemi(g.get_place(point), true);
+                        liste_tours[i].efface(g);
+                        nb_tour--;
+                        liste_tours[i] = liste_tours[nb_tour];
+                        bien_place = true;
+                    }
+                }
             }
         }
         else if (((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))||(n>Argent))

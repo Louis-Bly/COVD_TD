@@ -204,7 +204,7 @@ void Menu::regle()
     fillRect(ecart_cote,floor(hauteur/13)+2*floor(hauteur/13),largeur-2*ecart_cote, 7*floor(hauteur/13), WHITE);
     drawRect(ecart_cote,floor(hauteur/13)+2*floor(hauteur/13),largeur-2*ecart_cote, 7*floor(hauteur/13), BLACK);
     drawString(ecart_cote+largeur*0.05,3*floor(hauteur/13)+floor(hauteur/26),"Dans ce jeu, votre but est d'empêcher les ennemis d'atteindre leur objectif (case(s) avec les carrés cyans)", BLACK );
-    drawString(ecart_cote+largeur*0.05,4*floor(hauteur/13)+floor(hauteur/26),"Pour y parvenir, vous pouvez poser des tours qui tireront sur les ennemis." , BLACK);
+    drawString(ecart_cote+largeur*0.05,4*floor(hauteur/13)+floor(hauteur/26),"Pour y parvenir, vous pouvez poser (ou vendre) des tours qui tireront sur les ennemis." , BLACK);
     drawString(ecart_cote+largeur*0.05,5*floor(hauteur/13)+floor(hauteur/26),"Pour poser une tour, sélectionnez là puis placer la sur le terrain, si vous avez assez d'argent pour l'acheter", BLACK );
     drawString(ecart_cote+largeur*0.05,6*floor(hauteur/13)+floor(hauteur/26),"Faites attention, les ennemis adaptent leur trajectoire à chaque fois que vous posez une tour,", BLACK );
     drawString(ecart_cote+largeur*0.05,7*floor(hauteur/13)+floor(hauteur/26),"Par ailleurs, il vous ait impossible de leur barer totalement la route en posant des tours,", BLACK );

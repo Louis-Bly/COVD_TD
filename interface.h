@@ -40,6 +40,7 @@ public:
     int get_nb_ennemi(){return nb_ennemi;};
     int get_nb_tour(){return nb_tour;};
     int get_nb_proj(){return nb_proj;};
+    int get_ecart_case_tour(){return ecart_case_tour;};
 
     //Fonctions set:
 
@@ -53,7 +54,7 @@ public:
     void Affiche_nb_ennemi_restant();
     void Affiche_argent();
     void Affiche_marge();
-    void Affiche_case_tour(int &indice);
+    void Affiche_case_tour(int &indice, grille g);
 
     //Utilisations des cases pour placer les tours
     void choisir_tour(int &n, tour liste_tours[], grille g, ennemi liste_ennemi[], point a);

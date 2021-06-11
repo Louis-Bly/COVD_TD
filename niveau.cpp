@@ -30,7 +30,7 @@ bool niveau1(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int nb_ennemi_rapide=20;
     int nb_ennemi_tank=10;
     int ecart_moyen=25;
-    int argent=100;
+    int argent=200;
     int indice_arrivee=0;
     return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
@@ -43,7 +43,7 @@ bool niveau2(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int nb_ennemi_rapide=5;
     int nb_ennemi_tank=20;
     int ecart_moyen=20;
-    int argent=100;
+    int argent=200;
     int indice_arrivee=50;
     return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
@@ -56,7 +56,7 @@ bool niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int nb_ennemi_rapide=60;
     int nb_ennemi_tank=10;
     int ecart_moyen=26;
-    int argent=100;
+    int argent=200;
     int indice_arrivee=250;
     return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
@@ -163,7 +163,7 @@ bool niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
     for(int i=0;i<6;i++)
     {
         int j =i;
-        Interface.Affiche_case_tour(j);
+        Interface.Affiche_case_tour(j,g);
     }
 
     for (int i=0; i<Interface.get_nb_ennemi(); i++)
@@ -172,7 +172,6 @@ bool niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         liste_ennemis[i].Affiche_barre_vie();
 
     }
-    bool gagne = false;
     bool perdu = false;
     bool fini = false;
     while (not fini) //Boucle principale

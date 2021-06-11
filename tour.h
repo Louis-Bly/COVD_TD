@@ -8,7 +8,7 @@ const int nb_type_tour = 5;
 const int rayon_tour[nb_type_tour] = {0,400,175,400,500};
 const int tps_recharge_tour[nb_type_tour] = {0,10,20,30,40};
 const Color couleur_tour[nb_type_tour] = {ORANGE,RED,BLUE,GREEN,BLACK};
-const int cout_tour[nb_type_tour] = {0,1,2,5,10};
+const int cout_tour[nb_type_tour] = {1,5,10,25,40};
 
 class tour{
     point pos;

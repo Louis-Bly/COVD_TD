@@ -32,10 +32,9 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
 
 void interface::Affiche_nb_ennemi_restant()
 {
-    int taille_ecriture_ennemirest = 100;
     drawString(largeur*0.9,hauteur-taille_marge*0.25,"ENNEMIS",RED);
     drawString(largeur*0.9,hauteur-taille_marge*0.12,"RESTANTS",RED);
-    fillRect(largeur*0.94,hauteur-taille_marge*0.45,taille_ecriture_ennemirest,taille_marge*0.40,couleur_arriere_plan);
+    fillRect(largeur*0.94,hauteur-taille_marge*0.45,largeur*0.94,taille_marge*0.40,couleur_arriere_plan);
     drawString(largeur*0.96,hauteur-taille_marge*0.15,std::to_string(nb_ennemi),ORANGE,30);
 }
 void interface::Affiche_argent()
@@ -46,10 +45,17 @@ void interface::Affiche_argent()
 
 }
 
-void interface::Affiche_case_tour(int &indice)
+void interface::Affiche_case_tour(int &indice, grille g)
 {
     //Dessine des cases
     drawRect(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, BLACK);
+    //Dessine les tours et leur coûts
+    if (indice<5)
+    {
+        fillRect(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour)+floor(g.get_taille_case()/2), hauteur-hauteur_case_tour-8+floor(g.get_taille_case()/3),g.get_taille_case(),g.get_taille_case(), couleur_tour[indice]);
+        drawString(ecart_case_tour+indice*(largeur_case_tour+ecart_case_tour)+floor(1.8*g.get_taille_case()), hauteur-hauteur_case_tour-8+floor(g.get_taille_case()/3)+floor(g.get_taille_case()*0.7),std::to_string(cout_tour[indice]),BLACK,30);
+    }
+    drawString(ecart_case_tour+5*(largeur_case_tour+ecart_case_tour)+floor(0.5*g.get_taille_case()), hauteur-hauteur_case_tour-8+floor(g.get_taille_case()/3)+floor(g.get_taille_case()*0.7),"VENTE",BLACK,30);
     indice=-1;
 
     //On affiche aussi quelles tours sont achetables
@@ -85,7 +91,7 @@ void interface::choisir_tour(int &n, tour liste_tours[], grille g, ennemi liste_
     {
         if(choisir_position_tour(n, liste_tours, g, liste_ennemi, a)) //Si la position de la tour est possible, on la place
         {
-            Affiche_case_tour(n); //On deselectionne alors la case associee et la redessinant
+            Affiche_case_tour(n,g); //On deselectionne alors la case associee et la redessinant
         }
     }
 }

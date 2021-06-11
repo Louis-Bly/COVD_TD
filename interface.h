@@ -4,7 +4,6 @@
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
-#include "ennemi.h"
 #include "tour.h"
 
 class interface

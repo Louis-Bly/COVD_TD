@@ -91,7 +91,7 @@ void Menu::draw_boutons_ecran_jouer()
     drawString(ecart_cote+largeur*0.16,floor(hauteur/13)+2*floor(hauteur/13)+floor(hauteur/17),"T  U  T  O  R  I  E  L",ecriture,40);
     drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+4*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   1",ecriture,40);
     drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+6*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   2",ecriture,40);
-    drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+8*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   3",ecriture,40);
+    drawString(ecart_cote+largeur*0.18,floor(hauteur/13)+8*floor(hauteur/13)+floor(hauteur/17),"E  D  I  T  E  U  R",ecriture,40);
 
     drawString(ecart_cote+largeur*0.19,floor(hauteur/13)+floor(hauteur/17)+10*floor(hauteur/13),"R  E  T  O  U  R",ecriture,40);
 }
@@ -141,7 +141,7 @@ void Menu::changement_de_page()
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>9*floor(hauteur/13))&&(y<10*floor(hauteur/13)))
         {
             efface_ecran();
-            fin_de_niveau(niveau3(largeur,hauteur,taille_tour));
+            edition_de_niveau(largeur,hauteur,taille_tour);
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>11*floor(hauteur/13))&&(y<12*floor(hauteur/13)))
         {

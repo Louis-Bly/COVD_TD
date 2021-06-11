@@ -1,5 +1,4 @@
 #pragma once
-#include "ennemi.h"
 #include "projectile.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;

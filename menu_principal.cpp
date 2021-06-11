@@ -64,6 +64,8 @@ void Menu::affichage()
 
 void Menu::draw_boutons_ecran_acceuil()
 {
+    drawString(ecart_cote*0.6,ecart_cote*0.8,"TOWER DEFENSE",RED,150);
+
     for (int i=0; i<3; i++)
     {
         fillRect(ecart_cote,floor(hauteur/2)+i*2*floor(hauteur/12),largeur-2*ecart_cote, floor(hauteur/12), remplissage);

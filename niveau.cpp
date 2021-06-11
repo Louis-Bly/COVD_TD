@@ -311,7 +311,7 @@ bool niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         {
             int c=rand()%(20*nb_ennemis);
             c=ecart_moyen*sqrt(c); // Les ennemis ont plus de chance d'arrivée de loin
-            position_origine_r.x=Interface.get_largeur()+c*15;
+            position_origine_r.x=Interface.get_largeur()+c*10;
             position_origine_r.y=floor(taille_case/2)+taille_case*(rand()%10);
         }
         liste_ennemis[i]=ennemi_rapide(position_origine_r, g);

@@ -206,7 +206,7 @@ ennemi ennemi_ameliore(point position_origine, grille G)
 
 ennemi ennemi_rapide(point position_origine, grille G)
 {
-    int vite=15;
+    int vite=10;
     int vie_init=50;
     int recompense=5;
     int H=40;

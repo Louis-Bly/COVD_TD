@@ -46,6 +46,11 @@ point point::operator-(point p2){
     return dif;
 }
 
+
+bool point::operator==(point p2){
+    return(x==p2.x and y==p2.y);
+}
+
 double point::norm(){
     return sqrt(pow(x,2)+pow(y,2));
 }
@@ -54,6 +59,8 @@ double point::norm(){
 point Souris_clique_gauche() {
     point p;
     Event e;
+    p.x = -1;
+    p.y = -1;
     do {
         getEvent(0,e);
         if (e.type==EVT_BUT_ON)

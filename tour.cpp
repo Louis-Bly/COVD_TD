@@ -32,7 +32,7 @@ bool tour::tire(int nb_ennemis, int &nb_proj, int taille_case, ennemi liste_enne
         if(trouve_cible(cible, liste_ennemis, nb_ennemis)){ //Si on trouve un ennemi sur lequel tirer
             vect dirtir(cible.get_position().x-(pos.x+taille_case/2),cible.get_position().y-(pos.y+taille_case/2));
             dirtir = dirtir.normalise();
-            projectile proj(pos.x+taille_case/2,pos.y+taille_case/2,type,dirtir);
+            projectile proj(pos.x+taille_case/2,pos.y+taille_case/2,rayon,type,dirtir);
             liste_projectiles[nb_proj] = proj;
             recharge = tps_recharge;
             nb_proj ++;

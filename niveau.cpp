@@ -163,22 +163,23 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
     }
     while (Interface.get_nb_ennemi()>0)
     {
+        Interface.Affiche_marge();
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].efface();
         }
         g.affiche();
+        for(int i=0; i<Interface.get_nb_tour(); i++){
+            liste_tours[i].affiche(g);
+            int nbproj = Interface.get_nb_proj();
+            liste_tours[i].tire(Interface.get_nb_ennemi(),nbproj,g.get_taille_case(),liste_ennemis,liste_projectiles);
+            Interface.set_nb_proj(nbproj);
+        }
         for (int i=0; i<Interface.get_nb_ennemi(); i++)
         {
             Interface.Affiche_argent();
-            for(int i=0; i<Interface.get_nb_tour(); i++){
-                liste_tours[i].affiche(g);
-                int nbproj = Interface.get_nb_proj();
-                liste_tours[i].tire(Interface.get_nb_ennemi(),nbproj,g.get_taille_case(),liste_ennemis,liste_projectiles);
-                Interface.set_nb_proj(nbproj);
-            }
-            for (int n=0;n<6;n++)
+            for (int n=0;n<5;n++)
             {
-                Interface.dessine_argent_suffisant(n,n);
+                Interface.dessine_argent_suffisant(cout_tour[n],n);
             }
             liste_ennemis[i].Deplace(g,a);
 

@@ -24,6 +24,7 @@ struct point
     int y;
     point operator+(vect depl);
     point operator-(point p2);
+    bool operator==(point p2);
     double norm();
 };
 

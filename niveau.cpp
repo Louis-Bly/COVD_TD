@@ -61,31 +61,38 @@ bool niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
-bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+int choix_arrivee(int largeur_fenetre, int hauteur_fenetre, int taille_case, grille g, int marge)
 {
-    int marge=160;
-
-    //Choix du pooint d'arrivée
-    grille g(largeur_fenetre,hauteur_fenetre-marge,taille_case);
     g.affiche();
     drawString(4*marge,hauteur_fenetre-marge/2,"Choix du point d'arrivée",BLACK,20);
     point arrivee;
     bool arrivee_sur_ecran=false;
-    while (not arrivee_sur_ecran)
+    while (not arrivee_sur_ecran) //Tant que le point n'est pas valide
     {
         getMouse(arrivee.x,arrivee.y);
         arrivee_sur_ecran=((arrivee.x>0)&&(arrivee.x<g.get_taille_case()*(g.get_nb_largeur_case()-1))&&(arrivee.y>0)&&(arrivee.y<g.get_taille_case()*g.get_nb_hauteur_case()));
     }
-    int arrivee_indice=g.get_place(arrivee);
-    arrivee=g.get_pos(arrivee_indice);
+    return g.get_place(arrivee);
+}
+
+bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+{
+    int marge=160;
+
+    //Choix du point d'arrivée
+    grille g(largeur_fenetre,hauteur_fenetre-marge,taille_case);
+    int arrivee_indice=choix_arrivee(largeur_fenetre,hauteur_fenetre,taille_case,g, marge);
+    point arrivee=g.get_pos(arrivee_indice);
     fillRect(arrivee.x,arrivee.y,g.get_taille_case(),g.get_taille_case(),CYAN);
     click();
 
+
+    //Choix des ennemis
     fillRect(0,0,largeur_fenetre,hauteur_fenetre,WHITE);
     int taille_mini_case=100;
     int ecart_bord=largeur_fenetre*0.45;
     int ecart=50;
-    for (int i=1; i<6; i++)//Dessin des info tours
+    for (int i=1; i<6; i++)//Dessine les cases pour choisir le nombre d'ennemis
     {
         if (i!=5)
         {
@@ -117,21 +124,21 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
     emplacement.y=floor(hauteur_fenetre/13)+2*floor(hauteur_fenetre/13)+floor(1.2*ecart);
     ennemi E= ennemi_basique(emplacement,g);
     E.Affiche_ennemi(); E.Affiche_barre_vie();
-    int nb_basique=20;
+    int nb_basique=20; //l'utilisateur sera amené à changer cette valeur
     drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),3*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_basique),YELLOW,40);
 
 
     emplacement.y=floor(hauteur_fenetre/13)+4*floor(hauteur_fenetre/13)+floor(1.2*ecart);
     ennemi E2= ennemi_ameliore(emplacement,g);
     E2.Affiche_ennemi(); E2.Affiche_barre_vie();
-    int nb_ameliore=15;
+    int nb_ameliore=15;//l'utilisateur sera amené à changer cette valeur
     drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),5*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_ameliore),YELLOW,40);
 
 
     emplacement.y=floor(hauteur_fenetre/13)+6*floor(hauteur_fenetre/13)+floor(1.2*ecart);
     ennemi E3= ennemi_rapide(emplacement,g);
     E3.Affiche_ennemi(); E3.Affiche_barre_vie();
-    int nb_rapide=10;
+    int nb_rapide=10;//l'utilisateur sera amené à changer cette valeur
     drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),7*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_rapide),YELLOW,40);
 
 
@@ -139,7 +146,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
     emplacement.y=floor(hauteur_fenetre/13)+8*floor(hauteur_fenetre/13)+floor(1.2*ecart);
     ennemi E4= ennemi_tank(emplacement,g);
     E4.Affiche_ennemi(); E4.Affiche_barre_vie();
-    int nb_tank=5;
+    int nb_tank=5;//l'utilisateur sera amené à changer cette valeur
     drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),9*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_tank),YELLOW,40);
 
 
@@ -150,7 +157,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
         getMouse(x,y);
         if ((x>ecart_bord)&&(x<ecart_bord+taille_mini_case)) //Concerne les moins
         {
-            if ((y>3*floor(hauteur_fenetre/13))&&(y<4*floor(hauteur_fenetre/13)))
+            if ((y>3*floor(hauteur_fenetre/13))&&(y<4*floor(hauteur_fenetre/13))) //Ennemi basique
             {
                 if (nb_basique>0)
                     nb_basique--;
@@ -158,7 +165,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+2*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),3*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_basique),YELLOW,40);
             }
-            else if ((y>5*floor(hauteur_fenetre/13))&&(y<6*floor(hauteur_fenetre/13)))
+            else if ((y>5*floor(hauteur_fenetre/13))&&(y<6*floor(hauteur_fenetre/13))) //Ennemi ameliore
             {
 
                     nb_ameliore--;
@@ -166,7 +173,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+4*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),5*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_ameliore),YELLOW,40);
             }
-            else if ((y>7*floor(hauteur_fenetre/13))&&(y<8*floor(hauteur_fenetre/13)))
+            else if ((y>7*floor(hauteur_fenetre/13))&&(y<8*floor(hauteur_fenetre/13))) //Ennemi rapide
             {
                 if (nb_rapide>0)
                     nb_rapide--;
@@ -174,7 +181,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+6*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),7*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_rapide),YELLOW,40);
             }
-            else if ((y>9*floor(hauteur_fenetre/13))&&(y<10*floor(hauteur_fenetre/13)))
+            else if ((y>9*floor(hauteur_fenetre/13))&&(y<10*floor(hauteur_fenetre/13))) //Ennemi tank
             {
                 if (nb_tank>0)
                     nb_tank--;
@@ -185,28 +192,28 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
         }
         else if ((x>ecart_bord+2*(taille_mini_case+ecart))&&(x<ecart_bord+taille_mini_case+2*(taille_mini_case+ecart))) //Concerne les plus
         {
-            if ((y>3*floor(hauteur_fenetre/13))&&(y<4*floor(hauteur_fenetre/13)))
+            if ((y>3*floor(hauteur_fenetre/13))&&(y<4*floor(hauteur_fenetre/13))) //Ennemi basique
             {
                 nb_basique++;
                 fillRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+2*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLUE);
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+2*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),3*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_basique),YELLOW,40);
             }
-            else if ((y>5*floor(hauteur_fenetre/13))&&(y<6*floor(hauteur_fenetre/13)))
+            else if ((y>5*floor(hauteur_fenetre/13))&&(y<6*floor(hauteur_fenetre/13)))// Ennemi ameliore
             {
                 nb_ameliore++;
                 fillRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+4*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLUE);
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+4*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),5*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_ameliore),YELLOW,40);
             }
-            else if ((y>7*floor(hauteur_fenetre/13))&&(y<8*floor(hauteur_fenetre/13)))
+            else if ((y>7*floor(hauteur_fenetre/13))&&(y<8*floor(hauteur_fenetre/13)))//Ennemi rapide
             {
                 nb_rapide++;
                 fillRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+6*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLUE);
                 drawRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+6*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLACK,10);
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),7*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_rapide),YELLOW,40);
             }
-            else if ((y>9*floor(hauteur_fenetre/13))&&(y<10*floor(hauteur_fenetre/13)))
+            else if ((y>9*floor(hauteur_fenetre/13))&&(y<10*floor(hauteur_fenetre/13))) //Ennemi tank
             {
                 nb_tank++;
                 fillRect(ecart_bord+(ecart+taille_mini_case),floor(hauteur_fenetre/13)+8*floor(hauteur_fenetre/13),taille_mini_case,taille_mini_case, BLUE);
@@ -214,7 +221,7 @@ bool edition_de_niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case
                 drawString(ecart_bord+1*(ecart+taille_mini_case)+floor(taille_mini_case/4),9*floor(hauteur_fenetre/13)+floor(taille_mini_case*0.75),std::to_string(nb_tank),YELLOW,40);
             }
         }
-        else if ((x>ecart_bord)&&(x<ecart_bord+taille_mini_case+2*(taille_mini_case+ecart)))
+        else if ((x>ecart_bord)&&(x<ecart_bord+taille_mini_case+2*(taille_mini_case+ecart))) //Clique sur jouer
         {
             if ((y>11*floor(hauteur_fenetre/13))&&(y<12*floor(hauteur_fenetre/13)))
             {

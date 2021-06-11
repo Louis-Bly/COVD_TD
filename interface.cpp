@@ -38,10 +38,9 @@ void interface::Affiche_nb_ennemi_restant()
 }
 void interface::Affiche_argent()
 {
-    int taille_ecriture_argent=100;
     drawString(largeur*0.9,hauteur-taille_marge*0.75,"ARGENT",ORANGE);
-    fillRect(largeur*0.94,hauteur-taille_marge*0.95,taille_ecriture_argent,taille_marge*0.40,couleur_arriere_plan);
-    drawString(largeur*0.96,hauteur-taille_marge*0.65,std::to_string(Argent),ORANGE,30);
+    fillRect(largeur*0.94,hauteur-taille_marge*0.95,largeur*0.06,taille_marge*0.40,couleur_arriere_plan); //Efface l'ancienne valeur
+    drawString(largeur*0.96,hauteur-taille_marge*0.65,std::to_string(Argent),ORANGE,30);//Affiche la nouvelle valeur
 
 }
 
@@ -115,12 +114,12 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, enne
         point=Souris_clique_gauche(); //Choix de la position
         if (((point.x>0)&&(point.x<g.get_taille_case()*(g.get_nb_largeur_case()-1))&&(point.y>0)&&(point.y<g.get_taille_case()*g.get_nb_hauteur_case()))) //On verifie que l'on a clique sur l'ecran de jeu
         {
-            bien_place=g.get_libre_tour(g.get_place(point));
+            bien_place=g.get_libre_tour(g.get_place(point)); //On note si la case est libre
             place_sur_tour = not g.get_libre_ennemi(g.get_place(point));
-            g.set_libre_ennemi(g.get_place(point), false);
+            g.set_libre_ennemi(g.get_place(point), false);//La case n'est plus libre
             bool gene=verification_chemin(liste_ennemi, point, g, a); //On verifie que l'ajout de la tour n'empeche pas les ennemis d'atteindre leur destination
 
-            if ((bien_place)&&(gene==false)&&(cout_tour[n]<=Argent))
+            if ((bien_place)&&(gene==false)&&(cout_tour[n]<=Argent)) //Achat d'une nouvelle tour
             {
                 Argent-=cout_tour[n];//On enleve le cout à l'argent (pour l'instant n)
                 for (int i=0;i<5;i++)
@@ -131,17 +130,21 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, enne
                 liste_tours[nb_tour] = tour(point.x,point.y,n,g); //On dessine la tour
                 nb_tour++;
             }
-            else if(n==5 and place_sur_tour){
-                for(int i=0; i<nb_tour; i++){
-                    if(g.get_pos(g.get_place(point))==liste_tours[i].get_pos()){
-                        Argent += floor(0.75*cout_tour[liste_tours[i].get_type()]);
+            else if(n==5 and place_sur_tour)//Vente de tour
+            {
+                for(int i=0; i<nb_tour; i++)
+                {
+                    if(g.get_pos(g.get_place(point))==liste_tours[i].get_pos())//Si l'on clique sur une tour existante après avoir cliqué sur la case vendre
+                    {
+                        Argent += floor(0.75*cout_tour[liste_tours[i].get_type()]); //On récupère 75% de l'argent dépensé
                         for (int j=0;j<5;j++)
                         {
                             dessine_argent_suffisant(cout_tour[j],j); //On revoit quelles tours sont achetables
                         }
+                        //Il n'y a plus de tour sur la case, elle est à nouveau libre
                         g.set_libre_tour(g.get_place(point), true);
                         g.set_libre_ennemi(g.get_place(point), true);
-                        liste_tours[i].efface(g);
+                        liste_tours[i].efface(g);//On efface la tour et on la supprime de la liste
                         nb_tour--;
                         liste_tours[i] = liste_tours[nb_tour];
                         bien_place = true;
@@ -152,7 +155,7 @@ bool interface::choisir_position_tour(int &n, tour liste_tours[], grille g, enne
         else if (((point.x>0)&&(point.x<largeur)&&(point.y>hauteur-taille_marge)&&(point.y<hauteur))||(n>Argent))
         {
             drawRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-8,largeur_case_tour,hauteur_case_tour, BLACK);
-            n=-1; // Si on clique à nouveau dans la zone inférieur, on déselectionne la tour.
+            n=-1; // Si on clique à nouveau dans la zone inférieur, on déselectionne la tour (ou l'option vente).
 
         }
     }
@@ -164,15 +167,16 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
     bool bloque=false;
 
     //On teste les points de départs
-    chemin c=chemin(g);
+    chemin c=chemin(g);//C'est un chemin fictif
     for (int i=0; i<g.get_nb_hauteur_case();i++)
     {
-        point dep;
+        point dep; // dep va valoir toutes les cases depuis lesquelles les ennemis arrivent
         dep.y=i;
         dep.x=g.get_nb_largeur_case()-1;
         if (c.Calcul_plus_court_chemin(dep,g,a)==false)
         {
-            g.set_libre_ennemi(g.get_place(p), true);
+            //Si l'un des points de départs n'est pas relié à l'arrivée à cause de cette nouvelle tour
+            g.set_libre_ennemi(g.get_place(p), true); //On enleve cette tour
             bloque=true;
             return bloque;
         }
@@ -185,7 +189,7 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
         {
             if (liste_ennemi[i].Chemin_ennemi.Calcul_plus_court_chemin(g.get_indices_xy(g.get_place(liste_ennemi[i].get_position())),g,a)==false)
             {
-
+                //L'un des ennemis se retrouve enfermé à cause de la nouvelle tour
                 g.set_libre_ennemi(g.get_place(p), true);
                 bloque=true;
                 return bloque;
@@ -194,17 +198,6 @@ bool interface::verification_chemin(ennemi liste_ennemi[], point p,  grille g, p
     }
     return bloque;
 }
-
-bool interface::confirmer_placement() //Ne sert à rien
-{
-    point p=Souris_clique_gauche();
-    if ((p.x!=-1) && (p.y!=-1))
-    {
-        return true;
-    }
-    return false;
-}
-
 
 
 void interface::dessine_argent_suffisant(int cout, int n) //Indique quelles tours sont disponibles
@@ -217,14 +210,4 @@ void interface::dessine_argent_suffisant(int cout, int n) //Indique quelles tour
     {
         fillRect(ecart_case_tour+n*(largeur_case_tour+ecart_case_tour), hauteur-hauteur_case_tour-36,largeur_case_tour,22, couleur_arriere_plan);
     }
-}
-
-
-//Test
-void interface::liste_test(point position_origine_b, point position_origine_r, point position_origine_a, point position_origine_t, ennemi liste_ennemis[], grille g)
-{
-    liste_ennemis[0]=ennemi_basique(position_origine_b, g);
-    liste_ennemis[1]=ennemi_rapide(position_origine_r, g);
-    liste_ennemis[3]=ennemi_ameliore(position_origine_a, g);
-    liste_ennemis[2]=ennemi_tank(position_origine_t, g);
 }

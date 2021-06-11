@@ -8,14 +8,15 @@ void tutoriel(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
 
     init_random();
+    //Un seul ennemi de chaque type
     int nb_ennemi_basique=1;
     int nb_ennemi_ameliore=1;
     int nb_ennemi_rapide=1;
     int nb_ennemi_tank=1;
-    bool tutoriel=true; //Tous les ennemis apparaissent en même temps dans le tutoriel
+    bool tutoriel=true; //Tous les ennemis apparaissent l'un après l'autre, à un rythme lent
     int indice_arrivee=0;
     int ecart=100; //Pas utile dans le tutoriel, utile seulement dans les autres niveaux
-    int argent=1000;
+    int argent=1000; //Le joueur peut placer beaucoup de tours
     niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart, argent, indice_arrivee, tutoriel);
 
 }
@@ -23,6 +24,7 @@ void tutoriel(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 void niveau1(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
     init_random();
+    //On définit les nombres d'ennemis, un écart moyen, l'argent initial et l'arrivée
     int nb_ennemi_basique=50;
     int nb_ennemi_ameliore=20;
     int nb_ennemi_rapide=20;
@@ -59,12 +61,16 @@ void niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
+
+//Fonction appelé lors du déroulement d'un niveau/Tutoriel
 void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_basique, int nb_ameliore, int nb_rapide, int nb_tank, int ecart_moyen, int argent_initial, int indice_arrivee, bool tutoriel)
 {
 
     int buffer_tour=-1;
-    const int taille_marge = 160;
-    int nb_ennemis=nb_ameliore+nb_basique+nb_rapide+nb_tank;
+    const int taille_marge = 160; //Espace inférieur (ajout/vente de tour, affichage de l'argent...)
+    int nb_ennemis=nb_ameliore+nb_basique+nb_rapide+nb_tank; //Nombre d'ennemis total
+
+    //On définit les différents outils du jeu
     interface Interface=interface(nb_ennemis,largeur_fenetre,hauteur_fenetre,taille_marge,120,200,70, argent_initial);
 
     liste_ennemis = new ennemi[nb_ennemis];
@@ -85,18 +91,21 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
     {
         if(tutoriel)
         {
+            //Position fixe
             position_origine_b.x=Interface.get_largeur()+500;
             position_origine_b.y=floor(taille_case/2)+taille_case*(rand()%10);
         }
         else
         {
+            //Position aléatoire
             int c=rand()%(20*nb_ennemis);
             c=ecart_moyen*sqrt(c); // Les ennemis ont plus de chance d'arrivée de loin
             position_origine_b.x=Interface.get_largeur()+c*5;
             position_origine_b.y=floor(taille_case/2)+taille_case*(rand()%10);
         }
-        liste_ennemis[i]=ennemi_basique(position_origine_b, g);
+        liste_ennemis[i]=ennemi_basique(position_origine_b, g); //Ajout des ennemis basiques à la liste
     }
+    //On fait de même pour les autres types d'ennemis
     for (int i=nb_basique; i<nb_basique+nb_ameliore;i++)
     {
         if(tutoriel)
@@ -146,6 +155,9 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         liste_ennemis[i]=ennemi_tank(position_origine_t, g);
     }
 
+
+
+
     Interface.Affiche_marge();
     Interface.Affiche_nb_ennemi_restant();
     Interface.Affiche_argent();
@@ -161,7 +173,7 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         liste_ennemis[i].Affiche_barre_vie();
 
     }
-    while (Interface.get_nb_ennemi()>0)
+    while (Interface.get_nb_ennemi()>0) //Boucle principale
     {
         Interface.Affiche_marge();
         for(int i=0; i<Interface.get_nb_proj();i++){
@@ -181,7 +193,7 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
             {
                 Interface.dessine_argent_suffisant(cout_tour[n],n);
             }
-            liste_ennemis[i].Deplace(g,a);
+            liste_ennemis[i].Deplace(g,a); //Les ennemis se déplacent
 
             //TEST
             int ar=0;
@@ -189,6 +201,8 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
             if ((liste_ennemis[i].get_case_actuelle().x==a.x)&&(liste_ennemis[i].get_case_actuelle().y==a.y))
             {
                 liste_ennemis[i].Perte_vie(liste_ennemis[i].get_hp(), ar, i, k, liste_ennemis);
+
+                Interface.Affiche_nb_ennemi_restant();
                 Interface.set_nb_ennemi(k);
             }
             if (liste_ennemis[i].get_dans_le_cadre())

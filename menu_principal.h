@@ -50,4 +50,6 @@ public:
 
     void Info_tour();
 
+    void fin_de_niveau(bool gagne);
+
 };

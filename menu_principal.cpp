@@ -122,26 +122,32 @@ void Menu::changement_de_page()
         if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>3*floor(hauteur/13))&&(y<4*floor(hauteur/13)))
         {
             efface_ecran();
+
             tutoriel(largeur,hauteur,taille_tour); //On lance le tutoriel
+            fin_de_niveau(false);
+
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>5*floor(hauteur/13))&&(y<6*floor(hauteur/13)))
         {
             efface_ecran();
             niveau1(largeur,hauteur,taille_tour); //on lance le niveau1
+            fin_de_niveau(true);
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>7*floor(hauteur/13))&&(y<8*floor(hauteur/13)))
         {
             efface_ecran();
             niveau2(largeur,hauteur,taille_tour);
+            fin_de_niveau(true);
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>9*floor(hauteur/13))&&(y<10*floor(hauteur/13)))
         {
             efface_ecran();
             niveau3(largeur,hauteur,taille_tour);
+            fin_de_niveau(true);
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>11*floor(hauteur/13))&&(y<12*floor(hauteur/13)))
         {
-            ecran_actif="principal";
+            ecran_actif="principal"; //On a cliqué sur retour
         }
     }
     else if (ecran_actif=="info")
@@ -267,4 +273,33 @@ void Menu::Info_tour()
 
     fillRect(ecart_cote+largeur*0.32,floor(7.5*hauteur/13),taille_tour,taille_tour,BLACK);
     drawString(ecart_cote+largeur*0.37,floor(7.5*hauteur/13)+floor(taille_tour/2),"Une tour dont les flèches explosent", BLACK,20);
+}
+
+void Menu::fin_de_niveau(bool gagne)
+{
+    efface_ecran();
+    if (gagne)
+    {
+        drawString(ecart_cote*0.8,ecart_cote*0.8,"V  I  C  T  O  I  R  E",RED,120);
+    }
+    else
+    {
+        drawString(ecart_cote*0.8,ecart_cote*0.8,"D  E  F  A  I  T  E",RED,120);
+    }
+
+    fillRect(ecart_cote,floor(hauteur/13)+10*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), remplissage);
+    drawRect(ecart_cote,floor(hauteur/13)+10*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
+
+    drawString(ecart_cote+largeur*0.19,floor(hauteur/13)+floor(hauteur/17)+10*floor(hauteur/13),"R  E  T  O  U  R",ecriture,40);
+
+    //On ne quitte pas tant que l'on ne clique pas
+    click();
+    bool retour=false;
+    while (not retour)
+    {
+        int x; int y;
+        getMouse(x,y);
+        retour=(x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>11*floor(hauteur/13))&&(y<12*floor(hauteur/13));
+    }
+    efface_ecran();
 }

@@ -123,27 +123,25 @@ void Menu::changement_de_page()
         {
             efface_ecran();
 
-            tutoriel(largeur,hauteur,taille_tour); //On lance le tutoriel
-            fin_de_niveau(false);
+            //On lance le tutoriel
+            fin_de_niveau(tutoriel(largeur,hauteur,taille_tour));
 
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>5*floor(hauteur/13))&&(y<6*floor(hauteur/13)))
         {
             efface_ecran();
-            niveau1(largeur,hauteur,taille_tour); //on lance le niveau1
-            fin_de_niveau(true);
+            //on lance le niveau1
+            fin_de_niveau(niveau1(largeur,hauteur,taille_tour));
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>7*floor(hauteur/13))&&(y<8*floor(hauteur/13)))
         {
             efface_ecran();
-            niveau2(largeur,hauteur,taille_tour);
-            fin_de_niveau(true);
+            fin_de_niveau(niveau2(largeur,hauteur,taille_tour));
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>9*floor(hauteur/13))&&(y<10*floor(hauteur/13)))
         {
             efface_ecran();
-            niveau3(largeur,hauteur,taille_tour);
-            fin_de_niveau(true);
+            fin_de_niveau(niveau3(largeur,hauteur,taille_tour));
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>11*floor(hauteur/13))&&(y<12*floor(hauteur/13)))
         {
@@ -205,7 +203,7 @@ void Menu::regle()
 
     fillRect(ecart_cote,floor(hauteur/13)+2*floor(hauteur/13),largeur-2*ecart_cote, 7*floor(hauteur/13), WHITE);
     drawRect(ecart_cote,floor(hauteur/13)+2*floor(hauteur/13),largeur-2*ecart_cote, 7*floor(hauteur/13), BLACK);
-    drawString(ecart_cote+largeur*0.05,3*floor(hauteur/13)+floor(hauteur/26),"Dans ce jeu, votre but est d'empêcher les ennemis d'atteindre leur objectif (case(s) avec les flèches)", BLACK );
+    drawString(ecart_cote+largeur*0.05,3*floor(hauteur/13)+floor(hauteur/26),"Dans ce jeu, votre but est d'empêcher les ennemis d'atteindre leur objectif (case(s) avec les carrés cyans)", BLACK );
     drawString(ecart_cote+largeur*0.05,4*floor(hauteur/13)+floor(hauteur/26),"Pour y parvenir, vous pouvez poser des tours qui tireront sur les ennemis." , BLACK);
     drawString(ecart_cote+largeur*0.05,5*floor(hauteur/13)+floor(hauteur/26),"Pour poser une tour, sélectionnez là puis placer la sur le terrain, si vous avez assez d'argent pour l'acheter", BLACK );
     drawString(ecart_cote+largeur*0.05,6*floor(hauteur/13)+floor(hauteur/26),"Faites attention, les ennemis adaptent leur trajectoire à chaque fois que vous posez une tour,", BLACK );

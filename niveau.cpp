@@ -4,7 +4,7 @@ ennemi* liste_ennemis;
 tour* liste_tours;
 projectile* liste_projectiles;
 
-void tutoriel(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+bool tutoriel(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
 
     init_random();
@@ -17,11 +17,11 @@ void tutoriel(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int indice_arrivee=0;
     int ecart=100; //Pas utile dans le tutoriel, utile seulement dans les autres niveaux
     int argent=1000; //Le joueur peut placer beaucoup de tours
-    niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart, argent, indice_arrivee, tutoriel);
+    return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart, argent, indice_arrivee, tutoriel);
 
 }
 
-void niveau1(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+bool niveau1(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
     init_random();
     //On définit les nombres d'ennemis, un écart moyen, l'argent initial et l'arrivée
@@ -32,10 +32,10 @@ void niveau1(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int ecart_moyen=25;
     int argent=100;
     int indice_arrivee=0;
-    niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
+    return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
-void niveau2(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+bool niveau2(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
     init_random();
     int nb_ennemi_basique=30;
@@ -45,10 +45,10 @@ void niveau2(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int ecart_moyen=20;
     int argent=100;
     int indice_arrivee=50;
-    niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
+    return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
-void niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
+bool niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
 {
     init_random();
     int nb_ennemi_basique=100;
@@ -58,12 +58,12 @@ void niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int ecart_moyen=26;
     int argent=100;
     int indice_arrivee=250;
-    niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
+    return niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
 
 //Fonction appelé lors du déroulement d'un niveau/Tutoriel
-void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_basique, int nb_ameliore, int nb_rapide, int nb_tank, int ecart_moyen, int argent_initial, int indice_arrivee, bool tutoriel)
+bool niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_basique, int nb_ameliore, int nb_rapide, int nb_tank, int ecart_moyen, int argent_initial, int indice_arrivee, bool tutoriel)
 {
 
     int buffer_tour=-1;
@@ -229,9 +229,9 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         }
         Interface.choisir_tour(buffer_tour,liste_tours, g, liste_ennemis, a);
 
-        gagne = Interface.get_nb_ennemi()==0;
-        fini = gagne or perdu;
+        fini = Interface.get_nb_ennemi()==0 or perdu;
 
         milliSleep(100);
     }
+    return not perdu;
 }

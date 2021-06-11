@@ -146,6 +146,7 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         liste_ennemis[i]=ennemi_tank(position_origine_t, g);
     }
 
+    g.affiche_arrivee(indice_arrivee);
     Interface.Affiche_marge();
     Interface.Affiche_nb_ennemi_restant();
     Interface.Affiche_argent();
@@ -163,7 +164,9 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
     }
     while (Interface.get_nb_ennemi()>0)
     {
+        g.affiche_arrivee(indice_arrivee);
         Interface.Affiche_marge();
+        Interface.Affiche_nb_ennemi_restant();
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].efface();
         }

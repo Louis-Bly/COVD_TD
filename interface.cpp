@@ -32,8 +32,10 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
 
 void interface::Affiche_nb_ennemi_restant()
 {
+    int taille_ecriture_ennemirest = 100;
     drawString(largeur*0.9,hauteur-taille_marge*0.25,"ENNEMIS",RED);
     drawString(largeur*0.9,hauteur-taille_marge*0.12,"RESTANTS",RED);
+    fillRect(largeur*0.94,hauteur-taille_marge*0.45,taille_ecriture_ennemirest,taille_marge*0.40,couleur_arriere_plan);
     drawString(largeur*0.96,hauteur-taille_marge*0.15,std::to_string(nb_ennemi),ORANGE,30);
 }
 void interface::Affiche_argent()

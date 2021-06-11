@@ -37,7 +37,7 @@ public:
     point get_indices_xy(int place); //Renvoit les numeros de ligne/colonne
     int get_indices(point xy);
 
-
+    void affiche_arrivee(int arrivee);
 
 
 

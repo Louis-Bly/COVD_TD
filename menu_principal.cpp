@@ -24,18 +24,19 @@ void Menu::efface_ecran()
 
 void Menu::Menu_principal()
 {
+    //Fonction principale appelé dans main
     openWindow(largeur, hauteur);
-    draw_boutons_ecran_acceuil();
+    draw_boutons_ecran_acceuil(); //On commence par être sur l'écran d'acceuil
     while (ecran_actif!="Quitter")
     {
-        changement_de_page();
-        affichage();
+        changement_de_page(); //Navigation entre les pages
+        affichage(); //Affiche la nouvelle page
     }
 }
 
 void Menu::affichage()
 {
-    efface_ecran();
+    efface_ecran(); //Efface l'ancien écran puis regarde là où l'on se situe
     if (ecran_actif=="principal")
     {
         draw_boutons_ecran_acceuil();
@@ -64,9 +65,9 @@ void Menu::affichage()
 
 void Menu::draw_boutons_ecran_acceuil()
 {
-    drawString(ecart_cote*0.6,ecart_cote*0.8,"TOWER DEFENSE",RED,150);
+    drawString(ecart_cote*0.9,ecart_cote*0.8,"TOWER DEFENSE",RED,120); //Titre
 
-    for (int i=0; i<3; i++)
+    for (int i=0; i<3; i++) //Cases
     {
         fillRect(ecart_cote,floor(hauteur/2)+i*2*floor(hauteur/12),largeur-2*ecart_cote, floor(hauteur/12), remplissage);
         drawRect(ecart_cote,floor(hauteur/2)+i*2*floor(hauteur/12),largeur-2*ecart_cote, floor(hauteur/12), BLACK,10);
@@ -81,7 +82,7 @@ void Menu::draw_boutons_ecran_acceuil()
 
 void Menu::draw_boutons_ecran_jouer()
 {
-    for (int i=0; i<6; i++)
+    for (int i=0; i<6; i++) //On dessine les cases du menu jouer
     {
         fillRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), remplissage);
         drawRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
@@ -99,6 +100,7 @@ void Menu::changement_de_page()
 {
     int x,y;
     getMouse(x,y);
+    //On change de page, pour ce faire, on regarde où l'on est et où l'on clique
     if (ecran_actif=="principal")
     {
 
@@ -120,12 +122,12 @@ void Menu::changement_de_page()
         if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>3*floor(hauteur/13))&&(y<4*floor(hauteur/13)))
         {
             efface_ecran();
-            tutoriel(largeur,hauteur,taille_tour);
+            tutoriel(largeur,hauteur,taille_tour); //On lance le tutoriel
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>5*floor(hauteur/13))&&(y<6*floor(hauteur/13)))
         {
             efface_ecran();
-            niveau1(largeur,hauteur,taille_tour);
+            niveau1(largeur,hauteur,taille_tour); //on lance le niveau1
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>7*floor(hauteur/13))&&(y<8*floor(hauteur/13)))
         {
@@ -172,7 +174,7 @@ void Menu::changement_de_page()
 
 void Menu::draw_boutons_ecran_info()
 {
-    for (int i=0;i<5;i++)
+    for (int i=0;i<5;i++) //Dessin des cases
     {
         fillRect(ecart_cote,floor(hauteur/11)+i*2*floor(hauteur/11),largeur-2*ecart_cote, floor(hauteur/11), remplissage);
         drawRect(ecart_cote,floor(hauteur/11)+i*2*floor(hauteur/11),largeur-2*ecart_cote, floor(hauteur/11), BLACK,10);
@@ -187,7 +189,7 @@ void Menu::draw_boutons_ecran_info()
 
 void Menu::regle()
 {
-    for (int i=0; i<6; i+=5)
+    for (int i=0; i<6; i+=5)//Dessin des règles
     {
         fillRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), remplissage);
         drawRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
@@ -208,7 +210,7 @@ void Menu::regle()
 
 void Menu::Info_ennemi()
 {
-    for (int i=0; i<6; i+=5)
+    for (int i=0; i<6; i+=5) //Dessin des info ennemis
     {
         fillRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), remplissage);
         drawRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
@@ -243,7 +245,7 @@ void Menu::Info_ennemi()
 
 void Menu::Info_tour()
 {
-    for (int i=0; i<6; i+=5)
+    for (int i=0; i<6; i+=5)//Dessin des info tours
     {
         fillRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), remplissage);
         drawRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
@@ -261,7 +263,7 @@ void Menu::Info_tour()
     drawString(ecart_cote+largeur*0.05,9*floor(hauteur/13)+floor(taille_tour/2),"Une tour à petite portée mais dégats élevés", BLACK,20);
 
     fillRect(ecart_cote+largeur*0.32,floor(4.5*hauteur/13),taille_tour,taille_tour,GREEN);
-    drawString(ecart_cote+largeur*0.37,floor(4.5*hauteur/13)+floor(taille_tour/2),"Une tour dont les flèches ne s'arrête jamais", BLACK,20);
+    drawString(ecart_cote+largeur*0.37,floor(4.5*hauteur/13)+floor(taille_tour/2),"Une tour dont les flèches ne s'arrêtent jamais", BLACK,20);
 
     fillRect(ecart_cote+largeur*0.32,floor(7.5*hauteur/13),taille_tour,taille_tour,BLACK);
     drawString(ecart_cote+largeur*0.37,floor(7.5*hauteur/13)+floor(taille_tour/2),"Une tour dont les flèches explosent", BLACK,20);

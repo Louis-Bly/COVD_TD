@@ -1,6 +1,4 @@
 #pragma once
-#include "tools.h"
-#include "grille.h"
 #include "ennemi.h"
 #include "projectile.h"
 #include <Imagine/Graphics.h>

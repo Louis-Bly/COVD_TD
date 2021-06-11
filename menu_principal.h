@@ -1,12 +1,12 @@
 #pragma once
-#include "ennemi.h"
 #include "interface.h"
-#include "chemin.h"
-#include "grille.h"
-#include "tour.h"
-#include "projectile.h"
 #include <string>
 #include "niveau.h"
+using namespace std;
+#include <Imagine/Graphics.h>
+using namespace Imagine;
+
+#include <iostream>
 using namespace std;
 
 

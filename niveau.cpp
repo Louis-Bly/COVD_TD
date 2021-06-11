@@ -42,7 +42,7 @@ void niveau2(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int nb_ennemi_tank=20;
     int ecart_moyen=20;
     int argent=100;
-    int indice_arrivee=0;
+    int indice_arrivee=50;
     niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 
@@ -53,9 +53,9 @@ void niveau3(int largeur_fenetre, int hauteur_fenetre, int taille_case)
     int nb_ennemi_ameliore=10;
     int nb_ennemi_rapide=60;
     int nb_ennemi_tank=10;
-    int ecart_moyen=30;
+    int ecart_moyen=26;
     int argent=100;
-    int indice_arrivee=0;
+    int indice_arrivee=250;
     niveau(largeur_fenetre, hauteur_fenetre, taille_case, nb_ennemi_basique, nb_ennemi_ameliore, nb_ennemi_rapide, nb_ennemi_tank, ecart_moyen, argent, indice_arrivee);
 }
 

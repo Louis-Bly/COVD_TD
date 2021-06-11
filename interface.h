@@ -6,8 +6,6 @@ using namespace Imagine;
 
 #include "ennemi.h"
 #include "tour.h"
-#include "chemin.h"
-#include "tools.h"
 
 class interface
 {

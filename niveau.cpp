@@ -156,8 +156,7 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
     }
 
 
-
-
+    g.affiche_arrivee(indice_arrivee);
     Interface.Affiche_marge();
     Interface.Affiche_nb_ennemi_restant();
     Interface.Affiche_argent();
@@ -173,9 +172,14 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         liste_ennemis[i].Affiche_barre_vie();
 
     }
-    while (Interface.get_nb_ennemi()>0) //Boucle principale
+    bool gagne = false;
+    bool perdu = false;
+    bool fini = false;
+    while (not fini) //Boucle principale
     {
+        g.affiche_arrivee(indice_arrivee);
         Interface.Affiche_marge();
+        Interface.Affiche_nb_ennemi_restant();
         for(int i=0; i<Interface.get_nb_proj();i++){
             liste_projectiles[i].efface();
         }
@@ -204,6 +208,7 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
 
                 Interface.Affiche_nb_ennemi_restant();
                 Interface.set_nb_ennemi(k);
+                perdu = true;
             }
             if (liste_ennemis[i].get_dans_le_cadre())
             {
@@ -224,7 +229,8 @@ void niveau(int largeur_fenetre, int hauteur_fenetre, int taille_case, int nb_ba
         }
         Interface.choisir_tour(buffer_tour,liste_tours, g, liste_ennemis, a);
 
-
+        gagne = Interface.get_nb_ennemi()==0;
+        fini = gagne or perdu;
 
         milliSleep(100);
     }

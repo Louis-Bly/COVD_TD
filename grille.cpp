@@ -55,3 +55,11 @@ void grille::ajout_tour(int place)
 {
     libre_tour[place] = false;
 }
+
+void grille::affiche_arrivee(int arrivee){
+    point orig = get_pos(arrivee);
+    for(int i=0; i<taille_case/20; i++){
+        fillRect(orig.x+10*i,orig.y+10*i,taille_case-20*i,taille_case-20*i,CYAN);
+        fillRect(orig.x+10*i+5,orig.y+10*i+5,taille_case-20*i-10,taille_case-20*i-10,WHITE);
+    }
+}

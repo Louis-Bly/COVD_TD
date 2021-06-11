@@ -85,11 +85,11 @@ void Menu::draw_boutons_ecran_jouer()
         drawRect(ecart_cote,floor(hauteur/13)+i*2*floor(hauteur/13),largeur-2*ecart_cote, floor(hauteur/13), BLACK,10);
     }
     drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+floor(hauteur/17),"J  O  U  E  R",titre,40);
-    drawString(ecart_cote+largeur*0.16,floor(hauteur/13)+2*floor(hauteur/13)+floor(hauteur/17),"N  I  V  E  A  U    1",ecriture,40);
-    for (int i=2; i<5; i++)
-    {
-        drawString(ecart_cote+largeur*0.18,floor(hauteur/13)+2*i*floor(hauteur/13)+floor(hauteur/17),"A    V  E  N  I  R",ecriture,40);
-    }
+    drawString(ecart_cote+largeur*0.16,floor(hauteur/13)+2*floor(hauteur/13)+floor(hauteur/17),"T  U  T  O  R  I  E  L",ecriture,40);
+    drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+4*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   1",ecriture,40);
+    drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+6*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   2",ecriture,40);
+    drawString(ecart_cote+largeur*0.2,floor(hauteur/13)+8*floor(hauteur/13)+floor(hauteur/17),"N I V E A U   3",ecriture,40);
+
     drawString(ecart_cote+largeur*0.19,floor(hauteur/13)+floor(hauteur/17)+10*floor(hauteur/13),"R  E  T  O  U  R",ecriture,40);
 }
 
@@ -117,7 +117,23 @@ void Menu::changement_de_page()
     {
         if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>3*floor(hauteur/13))&&(y<4*floor(hauteur/13)))
         {
-            // On lance le niveau 1
+            efface_ecran();
+            tutoriel(largeur,hauteur,taille_tour);
+        }
+        else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>5*floor(hauteur/13))&&(y<6*floor(hauteur/13)))
+        {
+            efface_ecran();
+            niveau1(largeur,hauteur,taille_tour);
+        }
+        else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>7*floor(hauteur/13))&&(y<8*floor(hauteur/13)))
+        {
+            efface_ecran();
+            niveau2(largeur,hauteur,taille_tour);
+        }
+        else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>9*floor(hauteur/13))&&(y<10*floor(hauteur/13)))
+        {
+            efface_ecran();
+            niveau3(largeur,hauteur,taille_tour);
         }
         else if ((x>ecart_cote)&&(x<largeur-ecart_cote)&&(y>11*floor(hauteur/13))&&(y<12*floor(hauteur/13)))
         {

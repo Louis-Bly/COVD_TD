@@ -9,7 +9,7 @@ interface::interface()
 
 }
 
-interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_tour, int e_case_tour)
+interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_tour, int e_case_tour, int argent)
 {
     hauteur=h;
     largeur=l;
@@ -23,7 +23,7 @@ interface::interface(int nb, int l, int h, int hauteur_marge, int h_tour, int l_
 
     nb_ennemi_initial=nb;
     nb_ennemi=nb;
-    Argent=0;
+    Argent=argent;
     nb_tour = 0;
     nb_proj = 0;
 }

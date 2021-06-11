@@ -31,7 +31,7 @@ public:
 
     //Constructeur
     interface();
-    interface(int nb, int hauteur, int largeur, int hauteur_marge, int h_tour, int l_tour, int e_case_tour);
+    interface(int nb, int hauteur, int largeur, int hauteur_marge, int h_tour, int l_tour, int e_case_tour, int argent);
 
     //Fonctions get:
 

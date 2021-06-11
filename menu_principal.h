@@ -6,6 +6,7 @@
 #include "tour.h"
 #include "projectile.h"
 #include <string>
+#include "niveau.h"
 using namespace std;
 
 
